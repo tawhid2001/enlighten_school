@@ -4,10 +4,10 @@ fetch("navbar.html")
     document.getElementById("navbar").innerHTML = data;
     // Assign Auth Element
 
+    const navElement = document.getElementById("nav-element");
     const token = localStorage.getItem("authToken");
     // console.log(token);
     if (token) {
-      const navElement = document.getElementById("nav-element");
       const user_type = localStorage.getItem("user_type");
       if (user_type == "teacher") {
         navElement.innerHTML += `
