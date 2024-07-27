@@ -22,7 +22,7 @@ fetch("navbar.html")
         <a class="nav-link" onclick="handleLogout()">Logout</a>
       </li>`;
       }
-      else{
+      else if (user_type == "student"){
         navElement.innerHTML += `
       <li class="nav-item">
         <li><a class="nav-link" href="./enrolled_course.html">enrolled Courses</a></li>
