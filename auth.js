@@ -54,7 +54,7 @@ const handleLogin = (event) => {
     .then(data => {
         console.log("Login successful:", data);
         localStorage.setItem("authToken", data.key);
-        window.location.href = "./index.html";
+        window.location.href = "./index.html?reload=true";
     })
     .catch(error => {
         console.error('Login error:', error.message);

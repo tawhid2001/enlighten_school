@@ -39,9 +39,6 @@ fetch("navbar.html")
       </li>
       `;
       }
-      else{
-        window.location.href = "./index.html";
-      }
     } else {
       navElement.innerHTML += ` 
     <li class="nav-item">
