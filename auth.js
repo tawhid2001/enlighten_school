@@ -55,6 +55,7 @@ const handleLogin = (event) => {
         console.log("Login successful:", data);
         localStorage.setItem("authToken", data.key);
         window.location.href = "./index.html"; // Redirect to dashboard or home page
+        window.location.reload();
     })
     .catch(error => {
         console.error('Login error:', error.message);
