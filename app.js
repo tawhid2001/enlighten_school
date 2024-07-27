@@ -33,4 +33,6 @@ const userDetails =()=>{
       userInfo.appendChild(div);
   });
   };
+
+  userDetails();
   
