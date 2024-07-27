@@ -40,7 +40,7 @@ fetch("navbar.html")
       `;
       }
       else{
-        displayErrorMessage('User Undefined');
+        window.location.href = "./index.html";
       }
     } else {
       navElement.innerHTML += ` 
