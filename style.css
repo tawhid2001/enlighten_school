@@ -1,0 +1,24 @@
+#controls{
+    border: 1px solid gray;
+    margin: auto;
+    margin-top: 50px;
+    width: 50%;
+    box-shadow: 4px 4px 8px gray;
+    border-radius: 4px;
+}
+
+#user-edit{
+    border: 1px solid gray;
+    padding: 50px;
+    margin-top: 50px;
+    box-shadow: 4px 4px 8px gray;
+    border-radius: 4px;
+}
+
+#lessons{
+    border: 1px solid gray;
+    padding: 50px;
+    margin-top: 50px;
+    box-shadow: 4px 4px 8px gray;
+    border-radius: 4px;
+}

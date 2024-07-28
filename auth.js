@@ -14,7 +14,9 @@ const handleRegistration = (event) =>{
         user_type: formData.get("user_type"),
     }
     console.log("Registration Data: ", registrationData);
-    fetch("https://enlighten-institute.onrender.com/api/auth/registration/", {
+
+    https://enlighten-institute.onrender.com/api/auth/registration/
+    fetch("http://127.0.0.1:8000/api/auth/registration/", {
         method:"POST",
         headers: {
             "Content-Type": "application/json",
@@ -37,8 +39,8 @@ const handleLogin = (event) => {
         username: formData.get("username"),
         password: formData.get("password"),
     };
-
-    fetch("https://enlighten-institute.onrender.com/api/auth/login/", {
+    // https://enlighten-institute.onrender.com/api/auth/login/
+    fetch("http://127.0.0.1:8000/api/auth/login/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -54,7 +56,7 @@ const handleLogin = (event) => {
     .then(data => {
         console.log("Login successful:", data);
         localStorage.setItem("authToken", data.key);
-        window.location.href = "./index.html?reload=true";
+        window.location.href = "./index.html";
     })
     .catch(error => {
         console.error('Login error:', error.message);
@@ -65,8 +67,8 @@ const handleLogin = (event) => {
 
 const handleLogout = () => {
     const token = localStorage.getItem("authToken");
-    
-    fetch("https://enlighten-institute.onrender.com/api/auth/logout/", {
+    // https://enlighten-institute.onrender.com/api/auth/logout/
+    fetch("http://127.0.0.1:8000/api/auth/logout/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

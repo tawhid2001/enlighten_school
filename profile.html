@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enlighten E-School</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div id="navbar"></div>
+
+    <div id="user-edit" class="w-50 m-auto mt-5 edit_user">
+      <h3 class="h3 text-center">Edit User Information</h3>
+      <form id="editUserForm">
+        <div class="form-group">
+          <label for="editUsername">Username</label>
+          <input type="text" class="form-control" id="editUsername" required />
+        </div>
+        <div class="form-group">
+          <label for="editFirstName">First Name</label>
+          <input type="text" class="form-control" id="editFirstName" required />
+        </div>
+        <div class="form-group">
+          <label for="editLastName">Last Name</label>
+          <input type="text" class="form-control" id="editLastName" required />
+        </div>
+        <div class="form-group">
+          <label for="editEmail">Email</label>
+          <input type="email" class="form-control" id="editEmail" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+      </form>
+    <script src="./navbar.js"></script>
+    <script src="./auth.js"></script>
+    <script src="./app.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      // Function to fetch and populate user data
+      const userEdit = () => {
+        const token = localStorage.getItem("authToken");
+
+        fetch("http://127.0.0.1:8000/api/auth/user/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Populate the edit form with user data
+            document.getElementById("editUsername").value = data.username;
+            document.getElementById("editFirstName").value = data.first_name;
+            document.getElementById("editLastName").value = data.last_name;
+            document.getElementById("editEmail").value = data.email;
+          })
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+            alert("Failed to fetch user data. Please try again.");
+          });
+      };
+
+      // Function to handle form submission and update user info
+      const editUserInfo = (event) => {
+        event.preventDefault();
+        const token = localStorage.getItem("authToken");
+        const username = document.getElementById("editUsername").value;
+        const firstName = document.getElementById("editFirstName").value;
+        const lastName = document.getElementById("editLastName").value;
+        const email = document.getElementById("editEmail").value;
+
+        const data = {
+          username: username,
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+        };
+
+        fetch("http://127.0.0.1:8000/api/auth/user/update/", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to update user information.");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            userEdit(); // Refresh user details
+            window.location.href = "./index.html";
+          })
+          .catch((error) => {
+            console.error("Error updating user information:", error);
+          });
+      };
+
+      document.addEventListener("DOMContentLoaded", userEdit);
+      document
+        .getElementById("editUserForm")
+        .addEventListener("submit", editUserInfo);
+    </script>
+  </body>
+</html>

@@ -15,7 +15,7 @@ fetch("navbar.html")
         <a class="nav-link" href="./add_course.html">Add Course</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="./mycourse.html">My Courses</a>
+        <a class="nav-link" href="./profile.html">Profile</a>
         </li>
       <li class="nav-item">
         <a class="nav-link" onclick="handleLogout()">Logout</a>
@@ -26,6 +26,9 @@ fetch("navbar.html")
       <li class="nav-item">
         <li><a class="nav-link" href="./enrolled_course.html">enrolled Courses</a></li>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="./profile.html">Profile</a>
+        </li>
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         Department
@@ -52,7 +55,7 @@ fetch("navbar.html")
 
 
   const loadDepartments = () => {
-    fetch("https://enlighten-institute.onrender.com/api/department/courselist/")
+    fetch("http://127.0.0.1:8000/api/department/courselist/")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -68,11 +71,11 @@ fetch("navbar.html")
       });
   };
 
-  loadDepartments();
+
 
   const loadCoursesByDepartment=(search)=>{
     const token = localStorage.getItem("authToken");
-    fetch(`https://e-school-backend.onrender.com/department/department_courselist/${search}/`,{
+    fetch(`http://127.0.0.1:8000/api/department/department_courselist/${search}/`,{
       method:'GET',
       headers:{
         "Content-Type" : 'application/json',
