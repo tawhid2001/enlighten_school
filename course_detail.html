@@ -17,6 +17,7 @@
     <div id="navbar"></div>
 
     <!-- Course Detail -->
+    
     <div class="container">
       <div id="course-progress"></div>
 
@@ -24,7 +25,6 @@
 
         
       </div>
-
     </div>
 
     <!-- Lessons -->
@@ -34,6 +34,8 @@
         
     </div>
 
+    <button class="custom-enroll-btn m-4" id="enroll-btn" onclick="enrollStudent()">Enroll</button>
+    
     <!-- Lesson Progress -->
     <div class="d-flex align-items-center justify-content-center">
     <div class="row mx-auto m-5" id="lesson-progress"></div>
@@ -117,7 +119,8 @@
       crossorigin="anonymous"
     ></script>
     <script>
-    //   document.addEventListener("DOMContentLoaded", handlePageLoad);
+      document.addEventListener("DOMContentLoaded", getCourseDetail);
+      document.addEventListener("DOMContentLoaded", getLessons);
     </script>
   </body>
 </html>
