@@ -56,6 +56,8 @@ const getCourseDetail = () => {
       document.getElementById("edit_course_code").value = course.course_code;
       document.getElementById("editDescription").value = course.description;
     });
+
+    toggleButtons(userType);
 };
 
 const isCourseEnrolled = (courseId) => {
@@ -68,10 +70,6 @@ const toggleButtons = (userType) => {
   const enrollButton = document.getElementById("enroll-btn");
   const courseProgress = document.getElementById("course-progress");
 
-  // Initialize visibility
-  control.style.display = "none";
-  enrollButton.style.display = "none";
-  courseProgress.style.display = "none";
 
   if (userType === "student") {
     if (isCourseEnrolled(courseId)) {
@@ -79,6 +77,7 @@ const toggleButtons = (userType) => {
       enrollButton.style.display = "none";
     } else {
       enrollButton.style.display = "block";
+      courseProgress.style.display = "none";
     }
   } else if (userType === "teacher") {
     enrollButton.style.display = "none";
@@ -86,6 +85,8 @@ const toggleButtons = (userType) => {
     courseProgress.style.display = "none";
   } else {
     enrollButton.style.display = "none";
+    control.style.display = "none";
+    courseProgress.style.display = "none"
   }
 };
 
