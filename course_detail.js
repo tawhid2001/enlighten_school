@@ -57,7 +57,7 @@ const getCourseDetail = () => {
       document.getElementById("editDescription").value = course.description;
     });
 
-    toggleButtons(userType);
+  toggleButtons(userType);
 };
 
 const isCourseEnrolled = (courseId) => {
@@ -72,6 +72,7 @@ const toggleButtons = (userType) => {
 
 
   if (userType === "student") {
+    document.getElementById("enrolled_student").style.display = "none";
     if (isCourseEnrolled(courseId)) {
       courseProgress.style.display = "block";
       enrollButton.style.display = "none";
@@ -86,7 +87,7 @@ const toggleButtons = (userType) => {
   } else {
     enrollButton.style.display = "none";
     control.style.display = "none";
-    courseProgress.style.display = "none"
+    courseProgress.style.display = "none";
   }
 };
 
@@ -95,10 +96,8 @@ const getUserType = () => {
   return localStorage.getItem("user_type");
 };
 
-
-
 const editCourse = (event) => {
-  event.preventDefault(); 
+  event.preventDefault();
   const courseId = getQueryParams("id");
 
   const form = document.getElementById("edit-course");
@@ -323,6 +322,144 @@ const enrollStudent = () => {
     });
 };
 
+const fetchCourseResults = async () => {
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/enrollment/course-results/`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Token ${localStorage.getItem("authToken")}`, // Add your authorization token if needed
+        },
+      }
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching course results:", error);
+    return [];
+  }
+};
 
+// Get result based on enrollment ID
+const getResult = async (enrolledId) => {
+  const results = await fetchCourseResults();
+  console.log(results);
+  const result = results.find((result) => Number(result.enrollment) === Number(enrolledId));
+  return result
+    ? { resultId:result.id, marks: result.marks, feedback: result.feedback }
+    : { marks: "N/A", feedback: "N/A" };
+};
 
+// Populate enrolled students list and their results
+const enrolledStudentList = async () => {
+  const courseId = getQueryParams("id");
+  const userType = localStorage.getItem("user_type");
 
+  try {
+    const response = await fetch(
+      `http://127.0.0.1:8000/api/enrollment/students/${courseId}/`
+    );
+    const data = await response.json();
+    console.log(data); // This will log the enrolled students data
+    const enrolledStudentsList = document.getElementById(
+      "enrolled-students-list"
+    );
+
+    // Clear any existing rows
+    enrolledStudentsList.innerHTML = "";
+
+    for (const enrollment of data) {
+      const student = enrollment.student;
+      const result = await getResult(enrollment.id);
+
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${student.username}</td>
+        <td>${student.email}</td>
+        <td>${student.first_name}</td>
+        <td>${student.last_name}</td>
+        <td>${new Date(enrollment.enrolled_at).toLocaleDateString()}</td>
+        <td id="result-${enrollment.id}">
+          Marks: ${result.marks}<br>
+          Feedback: ${result.feedback}
+        </td>
+        <td>
+          ${
+            userType === "teacher"
+              ? `<div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton-${enrollment.id}" data-bs-toggle="dropdown" aria-expanded="false">
+              Actions
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton-${enrollment.id}">
+              <li><a class="dropdown-item" href="submit_result.html?enrollmentId=${enrollment.id}&courseId=${courseId}">Submit Result</a></li>
+              <li><a class="dropdown-item" href="submit_result.html?enrollmentId=${enrollment.id}&courseId=${courseId}&edit=true">Edit Result</a></li>
+            </ul>
+          </div>
+              `
+              : ""
+          }
+        </td>
+      `;
+      enrolledStudentsList.appendChild(row);
+    }
+  } catch (error) {
+    console.error("Error fetching enrolled students:", error);
+  }
+};
+
+// Submit results for a student
+
+const populateForm = async () => {
+  const enrollmentId = getQueryParams("enrollmentId");
+  console.log(enrollmentId);
+  const isEdit = getQueryParams("edit") === "true";
+
+  if (isEdit) {
+    document.getElementById("formTitle").innerText = "Edit Result";
+    const result = await getResult(enrollmentId);
+    console.log(result);
+    document.getElementById("marks").value = result.marks;
+    document.getElementById("feedback").value = result.feedback;
+  }
+};
+
+const submitResult = async (event) => {
+  event.preventDefault(); // Prevent the default form submission
+
+  const enrollmentId = getQueryParams("enrollmentId");
+  const courseId = getQueryParams("courseId");
+  const marks = document.getElementById("marks").value;
+  const feedback = document.getElementById("feedback").value;
+  const isEdit = getQueryParams("edit") === "true";
+  const resultId = await getResult(enrollmentId);
+
+  if (marks && feedback) {
+    const url = isEdit
+      ? `http://127.0.0.1:8000/api/enrollment/edit-course-results/${resultId.resultId}/`
+      : `http://127.0.0.1:8000/api/enrollment/course-results/`;
+    const method = isEdit ? "PUT" : "POST";
+
+    // Perform the fetch request
+    const response = await fetch(url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("authToken")}`,
+      },
+      body: JSON.stringify({
+        enrollment: enrollmentId,
+        marks: marks,
+        feedback: feedback,
+      }),
+    });
+
+    // Redirect on successful response
+    if (response.ok) {
+      window.location.href = `course_detail.html?id=${courseId}`;
+    }
+  }
+};
+
+// Call the function to initialize the list
+enrolledStudentList();

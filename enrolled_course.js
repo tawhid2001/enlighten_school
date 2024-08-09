@@ -112,3 +112,5 @@ const courseDetailinfo = (courseId) => {
         alert("Failed to disenroll from the course.");
       });
   };
+
+
