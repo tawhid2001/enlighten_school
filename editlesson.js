@@ -8,7 +8,7 @@ const getQueryParams = (param) => {
     const lessonId = getQueryParams("lessonId");
     const token = localStorage.getItem("authToken");
   
-    fetch(`http://127.0.0.1:8000/api/course/lesson/${courseId}`, {
+    fetch(`https://enlighten-institute.onrender.com/api/course/lesson/${courseId}`, {
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -45,7 +45,7 @@ const getQueryParams = (param) => {
     course : courseId,
   };
 
-  fetch(`http://127.0.0.1:8000/api/course/lesson/${lessonId}/`, {
+  fetch(`https://enlighten-institute.onrender.com/api/course/lesson/${lessonId}/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

@@ -6,7 +6,7 @@ const getQueryParams = (param) => {
 const getCourseDetail = () => {
   const courseId = getQueryParams("id");
   const userType = localStorage.getItem("user_type");
-  fetch(`http://127.0.0.1:8000/api/course/courselist/${courseId}`)
+  fetch(`https://enlighten-institute.onrender.com/api/course/courselist/${courseId}`)
     .then((res) => res.json())
     .then((course) => {
       console.log(course);
@@ -113,7 +113,7 @@ const editCourse = (event) => {
     description: formData.get("editDescription"),
   };
 
-  fetch(`http://127.0.0.1:8000/api/course/courselist/${courseId}/`, {
+  fetch(`https://enlighten-institute.onrender.com/api/course/courselist/${courseId}/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -131,7 +131,7 @@ const editCourse = (event) => {
 const deleteCourse = () => {
   const courseId = getQueryParams("id");
   const token = localStorage.getItem("authToken");
-  fetch(`http://127.0.0.1:8000/api/course/courselist/${courseId}/`, {
+  fetch(`https://enlighten-institute.onrender.com/api/course/courselist/${courseId}/`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -154,7 +154,7 @@ const addLesson = (event) => {
   };
 
   const token = localStorage.getItem("authToken");
-  fetch(`http://127.0.0.1:8000/api/course/${courseId}/lessons/`, {
+  fetch(`https://enlighten-institute.onrender.com/api/course/${courseId}/lessons/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -234,13 +234,13 @@ const getLessons = () => {
   localStorage.removeItem("enrolledId");
   const enrolled = fetchEnrollmentId(studentId,courseId);
   
-  let url = `http://127.0.0.1:8000/api/course/courselessons/${courseId}`;
+  let url = `https://enlighten-institute.onrender.com/api/course/courselessons/${courseId}`;
   let headers = {};
 
   if (enrolled) {
     headers = { Authorization: `Token ${localStorage.getItem("authToken")}` };
   } else {
-    url = `http://127.0.0.1:8000/api/course/${courseId}/lessons/`; // Alternate endpoint for non-enrolled users
+    url = `https://enlighten-institute.onrender.com/api/course/${courseId}/lessons/`; // Alternate endpoint for non-enrolled users
   }
 
   fetch(url, { headers })
@@ -267,7 +267,7 @@ const deleteLesson = (lessonID) => {
   const courseId = getQueryParams("courseId");
   const token = localStorage.getItem("authToken");
 
-  fetch(`http://127.0.0.1:8000/api/course/lesson/${lessonID}/`, {
+  fetch(`https://enlighten-institute.onrender.com/api/course/lesson/${lessonID}/`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -288,7 +288,7 @@ const enrollStudent = () => {
   const token = localStorage.getItem("authToken");
   const studentId = localStorage.getItem("user_id");
   const courseId = getQueryParams("id");
-  fetch("http://127.0.0.1:8000/api/enrollment/enroll/", {
+  fetch("https://enlighten-institute.onrender.com/api/enrollment/enroll/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -318,7 +318,7 @@ const enrollStudent = () => {
 const fetchCourseResults = async () => {
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/enrollment/course-results/`,
+      `https://enlighten-institute.onrender.com/api/enrollment/course-results/`,
       {
         method: "GET",
         headers: {
@@ -349,7 +349,7 @@ const getResult = async (enrolledId) => {
 
 const fetchEnrollmentId = (studentId, courseId) => {
   const token = localStorage.getItem("authToken");
-  fetch(`http://127.0.0.1:8000/api/enrollment/student/${studentId}/course/${courseId}/`, {
+  fetch(`https://enlighten-institute.onrender.com/api/enrollment/student/${studentId}/course/${courseId}/`, {
     method: 'GET',
     headers: {
       "Content-Type": 'application/json',
@@ -413,7 +413,7 @@ const enrolledStudentList = async () => {
 
   try {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/enrollment/students/${courseId}/`
+      `https://enlighten-institute.onrender.com/api/enrollment/students/${courseId}/`
     );
     const data = await response.json();
     console.log(data); // This will log the enrolled students data
@@ -495,8 +495,8 @@ const submitResult = async (event) => {
 
   if (marks && feedback) {
     const url = isEdit
-      ? `http://127.0.0.1:8000/api/enrollment/edit-course-results/${resultId.resultId}/`
-      : `http://127.0.0.1:8000/api/enrollment/course-results/`;
+      ? `https://enlighten-institute.onrender.com/api/enrollment/edit-course-results/${resultId.resultId}/`
+      : `https://enlighten-institute.onrender.comapi/enrollment/course-results/`;
     const method = isEdit ? "PUT" : "POST";
 
     // Perform the fetch request
@@ -534,7 +534,7 @@ const submitProgress = (event, lessonId) => {
     student: localStorage.getItem("user_id"),
   };
 
-  fetch("http://127.0.0.1:8000/api/course/lessonprogress/", {
+  fetch("https://enlighten-institute.onrender.com/api/course/lessonprogress/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -559,7 +559,7 @@ const fetchCompletedLessons = () => {
   const token = localStorage.getItem("authToken");
   const courseId = getQueryParams("id");
   
-  fetch(`http://127.0.0.1:8000/api/course/courselessons/${courseId}`, {
+  fetch(`https://enlighten-institute.onrender.com/api/course/courselessons/${courseId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -587,7 +587,7 @@ const showCourseProgress = () => {
   console.log(enrolled);
 
   if (enrolled === "true") {
-    fetch(`http://127.0.0.1:8000/api/course/course_progress/${courseId}/`, {
+    fetch(`https://enlighten-institute.onrender.com/api/course/course_progress/${courseId}/`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${localStorage.getItem("authToken")}`,

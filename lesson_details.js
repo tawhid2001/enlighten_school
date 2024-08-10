@@ -6,7 +6,7 @@ const getQueryParams = (param) => {
 const getLessonDetail = () => {
   const lessonID = getQueryParams("lessonId");
 
-  fetch(`http://127.0.0.1:8000/api/course/lesson/${lessonID}`, {
+  fetch(`https://enlighten-institute.onrender.com/api/course/lesson/${lessonID}`, {
     Authorization: `Token ${localStorage.getItem("authToken")}`,
   })
     .then((res) => res.json())

@@ -53,7 +53,7 @@ fetch("navbar.html")
   });
 
 const loadDepartments = () => {
-  fetch("http://127.0.0.1:8000/api/department/courselist/")
+  fetch("https://enlighten-institute.onrender.com/api/department/courselist/")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -71,7 +71,7 @@ const loadDepartments = () => {
 
 const loadCoursesByDepartment = (search) => {
   const token = localStorage.getItem("authToken");
-  fetch(`http://127.0.0.1:8000/api/department/courselist/${search}/`, {
+  fetch(`https://enlighten-institute.onrender.com/api/department/courselist/${search}/`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

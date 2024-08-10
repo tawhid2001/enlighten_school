@@ -1,7 +1,6 @@
 const getUserDetails = () => {
   const token = localStorage.getItem("authToken");
-  // https://enlighten-institute.onrender.com/api/auth/user/
-  fetch("http://127.0.0.1:8000/api/auth/user/", {
+  fetch("https://enlighten-institute.onrender.com/api/auth/user/", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -32,8 +31,7 @@ const addCourse =(event) =>{
     slug: formData.get("course_name").toLowerCase().replace(/ /g, '-'),
     department: formData.get("department"),
   };
-  // https://enlighten-institute.onrender.com/api/course/courselist/
-  fetch("http://127.0.0.1:8000/api/course/courselist/",{
+  fetch("https://enlighten-institute.onrender.com/api/course/courselist/",{
     method: "POST",
     headers:{
       "Content-Type":"application/json",
@@ -56,7 +54,7 @@ const loadCourses = () => {
   const token = localStorage.getItem('authToken');
   
   
-  fetch("http://127.0.0.1:8000/api/course/courselist/", {
+  fetch("https://enlighten-institute.onrender.com/api/course/courselist/", {
     method: 'GET',
     headers: {
       "Content-Type": 'application/json',
