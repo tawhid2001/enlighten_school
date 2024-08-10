@@ -169,14 +169,79 @@ const addLesson = (event) => {
     });
 };
 
+const createLessonCard = (lesson, userType, courseId, isCompleted) => {
+  const div = document.createElement("div");
+  const isenrolled = isCourseEnrolled(courseId);
+  div.className = "card m-5 mx-auto";
+  
+  let cardContent = `
+    <div class="card-body">
+      <h1 class="card-title">Lesson Title: ${lesson.title}</h1>
+      <p class="card-text">Time: <small><strong>${formatDate(lesson.created_at)}</strong></small></p>
+      ${isCompleted ? `
+        <h5 class="card-text">Lesson Content: ${lesson.content}</h5>
+        <button class="btn btn-primary mt-3" disabled>Completed</button>
+      ` : `
+        <h5 class="card-text">Lesson Content: ${lesson.content}</h5>
+      `}
+      <br>
+      <a class="btn btn-warning my-2" href="lesson_details.html?lessonId=${lesson.id}&courseId=${courseId}">Details</a>
+  `;
+
+  if (userType === "teacher") {
+    cardContent += `
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle m-4" type="button" id="dropdownMenuButton_${lesson.id}" data-bs-toggle="dropdown" aria-expanded="false">
+          Menu
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_${lesson.id}">
+          <a href="lesson_details.html?lessonId=${lesson.id}&courseId=${courseId}" class="dropdown-item">Details</a>
+          <a href="editlesson.html?lessonId=${lesson.id}&courseId=${courseId}" class="dropdown-item">Edit</a>
+          <button class="dropdown-item" onclick="deleteLesson(${lesson.id})">Delete</button>
+        </ul>
+      </div>
+    `;
+  } else if (isenrolled) {
+    if(!isCompleted){
+      cardContent += `
+      <form id="progressForm_${lesson.id}" onsubmit="submitProgress(event, ${lesson.id})">
+        <input type="hidden" name="lesson_id" value="${lesson.id}">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="completed" id="completed_${lesson.id}">
+          <label class="form-check-label" for="completed_${lesson.id}">Completed</label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit Progress</button>
+      </form>
+    `;
+    }
+    else{
+      ''
+    }
+  }
+
+  cardContent += `</div>`;
+  div.innerHTML = cardContent;
+  
+  return div;
+};
+
+
+
 const getLessons = () => {
   const courseId = getQueryParams("id");
+  const studentId = localStorage.getItem("user_id");
   const userType = localStorage.getItem("user_type");
-  const enrolled = localStorage.getItem(`course_enrolled_${courseId}`);
-  const url = `http://127.0.0.1:8000/api/course/courselessons/${courseId}`;
-  const headers = enrolled
-    ? { Authorization: `Token ${localStorage.getItem("authToken")}` }
-    : {};
+  localStorage.removeItem("enrolledId");
+  const enrolled = fetchEnrollmentId(studentId,courseId);
+  
+  let url = `http://127.0.0.1:8000/api/course/courselessons/${courseId}`;
+  let headers = {};
+
+  if (enrolled) {
+    headers = { Authorization: `Token ${localStorage.getItem("authToken")}` };
+  } else {
+    url = `http://127.0.0.1:8000/api/course/${courseId}/lessons/`; // Alternate endpoint for non-enrolled users
+  }
 
   fetch(url, { headers })
     .then((res) => res.json())
@@ -184,93 +249,19 @@ const getLessons = () => {
       console.log(lessons);
       const lessonContainer = document.getElementById("lessons");
       lessonContainer.innerHTML = "";
-      if (!enrolled || userType === "teacher") {
-        lessons.forEach((lesson) => {
-          const div = document.createElement("div");
-          div.className = "card m-5 mx-auto";
-          div.innerHTML = `
-              <div class="card-body">
-                <h1 class="card-title">Lesson Title: ${lesson.title}</h1>
-                <p class="card-text">Time: <small><strong>${formatDate(
-                  lesson.created_at
-                )}</strong></small></p>
-                ${
-                  userType === "teacher"
-                    ? `
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle m-4" type="button" id="dropdownMenuButton_${lesson.id}" data-bs-toggle="dropdown" aria-expanded="false">
-                      Menu
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton_${lesson.id}">
-                      <a href="lesson_details.html?lessonId=${lesson.id}&courseId=${courseId}" class="dropdown-item">Details</a>
-                    <a href="editlesson.html?lessonId=${lesson.id}&courseId=${courseId}" class="dropdown-item">Edit</a>
-                    <button class="dropdown-item" onclick="deleteLesson(${lesson.id})">Delete</button>
-                    </ul>
-                  </div>
-                `
-                    : ""
-                }
-              </div>
-            `;
-          lessonContainer.appendChild(div);
-        });
-      } else {
-        lessons.forEach((lesson) => {
-          const completedLesson = localStorage.getItem(
-            `lesson_completed_${lesson.id}`
-          );
-          const div = document.createElement("div");
-          div.className = "card m-5 mx-auto";
-          if (completedLesson === "true") {
-            div.innerHTML = `
-                <div class="card-body">
-                  <h1 class="card-title">Lesson Title: ${lesson.title}</h1>
-                  <h5 class="card-text">Lesson Content: ${lesson.content}</h5>
-                  <p class="card-text">Time: <small><strong>${formatDate(
-                    lesson.created_at
-                  )}</strong></small></p>
-                  <button class="btn btn-primary mt-3" disabled>Completed</button>
-                  <a class="btn btn-primary" href="lesson_details.html?lessonId=${
-                    lesson.id
-                  }&courseId=${courseId}">Details</a>
-                </div>
-              `;
-          } else {
-            div.innerHTML = `
-                <div class="card-body">
-                  <h1 class="card-title">Lesson Title: ${lesson.title}</h1>
-                  <h5 class="card-text">Lesson Content: ${lesson.content}</h5>
-                  <p class="card-text">Time: <small><strong>${formatDate(
-                    lesson.created_at
-                  )}</strong></small></p>
-                  <form id="progressForm_${
-                    lesson.id
-                  }" onsubmit="submitProgress(event, ${lesson.id})">
-                    <input type="hidden" name="lesson_id" value="${lesson.id}">
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" name="completed" id="completed_${
-                        lesson.id
-                      }">
-                      <label class="form-check-label" for="completed_${
-                        lesson.id
-                      }">Completed</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary mt-3">Submit Progress</button>
-                    </form>
-                    </div>
-                    <a class="btn btn-warning" href="lesson_details.html?lessonId=${
-                      lesson.id
-                    }&courseId=${courseId}">Details</a>
-              `;
-          }
-          lessonContainer.appendChild(div);
-        });
-      }
+
+      lessons.forEach((lesson) => {
+        const isCompleted = localStorage.getItem(`lesson_completed_${lesson.id}`) === "true";
+        const lessonCard = createLessonCard(lesson, userType, courseId, isCompleted);
+        lessonContainer.appendChild(lessonCard);
+      });
     })
     .catch((error) => {
       console.error("Error fetching lessons:", error);
     });
 };
+
+
 
 const deleteLesson = (lessonID) => {
   const courseId = getQueryParams("courseId");
@@ -317,8 +308,6 @@ const enrollStudent = () => {
     .then((enrollment) => {
       console.log("Enrollment successful:", enrollment);
       localStorage.setItem(`course_enrolled_${courseId}`, true);
-      const enrollmentId = enrollment.id;
-      localStorage.setItem('enrolledId', enrollmentId);
       window.location.href = `./course_detail.html?id=${courseId}`;
     })
     .catch((error) => {
@@ -358,7 +347,39 @@ const getResult = async (enrolledId) => {
     : { resultId: "N/A", marks: "N/A", feedback: "N/A" };
 };
 
+const fetchEnrollmentId = (studentId, courseId) => {
+  const token = localStorage.getItem("authToken");
+  fetch(`http://127.0.0.1:8000/api/enrollment/student/${studentId}/course/${courseId}/`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": 'application/json',
+      "Authorization": `Token ${token}` // If your API requires token authentication
+    }
+  })
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
+  .then((enrollment) => {
+    if (enrollment.id) {
+      localStorage.setItem('enrolledId',enrollment.id);
+      // You can do something with the enrollment ID here
+    } else {
+      localStorage.setItem('enrolledId',enrollment.id);
+    }
+  })
+  .catch((error) => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
+};
+
+
 const showResult = async () => {
+  const courseId = getQueryParams('id');
+  const studentId = localStorage.getItem("user_id");
+  fetchEnrollmentId(studentId,courseId);
   const enrolledId = localStorage.getItem("enrolledId");
   if (!enrolledId) {
     console.error("No enrolled ID found in local storage.");
@@ -375,6 +396,7 @@ const showResult = async () => {
 
   const div = document.createElement("div");
   div.innerHTML = `
+    <h1 class="text-center">Result</h1>
     <p class = "h4">Marks: ${result.marks}</p>
     <p class = "h4">Feedback: ${result.feedback}</p>
   `;
@@ -497,6 +519,112 @@ const submitResult = async (event) => {
     }
   }
 };
+
+
+const submitProgress = (event, lessonId) => {
+  event.preventDefault();
+  const courseId = getQueryParams('id');
+  const form = document.getElementById(`progressForm_${lessonId}`);
+  const completed = form.querySelector(`#completed_${lessonId}`).checked;
+  const token = localStorage.getItem("authToken");
+
+  const data = {
+    lesson: lessonId,
+    completed: completed,
+    student: localStorage.getItem("user_id"),
+  };
+
+  fetch("http://127.0.0.1:8000/api/course/lessonprogress/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Success:", data);
+      // Corrected the localStorage key to include an underscore
+      localStorage.setItem(`lesson_completed_${lessonId}`, true);
+      window.location.href = `./course_detail.html?id=${courseId}`;
+    })
+    .catch((error) => {
+      console.error("Error updating progress:", error);
+      alert("Failed to update progress.");
+    });
+};
+
+const fetchCompletedLessons = () => {
+  const token = localStorage.getItem("authToken");
+  const courseId = getQueryParams("id");
+  
+  fetch(`http://127.0.0.1:8000/api/course/courselessons/${courseId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((lessons) => {
+      console.log(lessons);
+      lessons.forEach((lesson) => {
+        localStorage.setItem(`lesson_completed_${lesson.id}`, lesson.completed);
+      });
+    })
+    .catch((error) => {
+      console.error("Error Fetching", error);
+    });
+};
+
+fetchCompletedLessons();
+
+const showCourseProgress = () => {
+  const courseId = getQueryParams("id");
+  console.log(courseId);
+  const enrolled = localStorage.getItem(`course_enrolled_${courseId}`);
+  console.log(enrolled);
+
+  if (enrolled === "true") {
+    fetch(`http://127.0.0.1:8000/api/course/course_progress/${courseId}/`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${localStorage.getItem("authToken")}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch course progress.");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        const progressContainer = document.getElementById("course-progress");
+        
+        progressContainer.innerHTML = `
+            <h1 class="text-center">Course Progress</h1>
+            <p class="h4">Course Name: <small>${data.course_name}</small></p>
+            <p class="h4">Progress: <small>${data.progress}%</small></p>
+          `;
+
+          if(getUserType() === 'teacher'){
+            progressContainer.style.display = 'none';
+          }
+          else{
+            progressContainer.style.display = 'block';
+          }
+      })
+      .catch((error) => {
+        console.error("Error fetching course progress:", error);
+        alert(error.message);
+      });
+  }
+};
+
+showCourseProgress();
+
 
 // Call the function to initialize the list
 enrolledStudentList();

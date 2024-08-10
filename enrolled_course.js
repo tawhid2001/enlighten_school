@@ -43,7 +43,7 @@ const courseDetailinfo = (courseId) => {
             const div = document.createElement("div");
             div.classList.add("col-sm-6");
             div.innerHTML = `
-              <div class="card">
+              <div class="card customBox-2">
                 <div class="card-body">
                 <div id="course-progress"></div>
                   <h3 class="card-title" onclick="fetchLessons(${enrolled.course})">Course Name: ${courseInfo[0]}</h3>

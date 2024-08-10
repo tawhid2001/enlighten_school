@@ -20,8 +20,7 @@ fetch("navbar.html")
       <li class="nav-item">
         <a class="nav-link" onclick="handleLogout()">Logout</a>
       </li>`;
-      }
-      else if (user_type == "student"){
+      } else if (user_type == "student") {
         navElement.innerHTML += `
       <li class="nav-item">
         <li><a class="nav-link" href="./enrolled_course.html">enrolled Courses</a></li>
@@ -53,59 +52,75 @@ fetch("navbar.html")
     }
   });
 
-
-  const loadDepartments = () => {
-    fetch("http://127.0.0.1:8000/api/department/courselist/")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        data.forEach((item) => {
-          const parent = document.getElementById("drop-department");
-          const li = document.createElement("li");
-          li.classList.add("dropdown-item");
-          li.innerHTML = `
+const loadDepartments = () => {
+  fetch("http://127.0.0.1:8000/api/department/courselist/")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data);
+      data.forEach((item) => {
+        const parent = document.getElementById("drop-department");
+        const li = document.createElement("li");
+        li.classList.add("dropdown-item");
+        li.innerHTML = `
           <li onclick = "loadCoursesByDepartment('${item.slug}')">${item.name}</li>
-          `
-          parent.appendChild(li);
-        });
-      });
-  };
-
-
-
-  const loadCoursesByDepartment=(search)=>{
-    const token = localStorage.getItem("authToken");
-    fetch(`http://127.0.0.1:8000/api/department/department_courselist/${search}/`,{
-      method:'GET',
-      headers:{
-        "Content-Type" : 'application/json',
-      }
-    }).then((res)=>res.json()).then((courses)=>{
-      const allCourse = document.getElementById("all-courses");
-      allCourse.innerHTML = '';
-      courses.forEach((course)=>{
-        const div = document.createElement("div");
-        div.classList.add("col-sm-6");
-        div.innerHTML = `
-        <div class="card">
-            <div class="card-body">
-              <h3 class="card-title">Course Name: ${course.course_name}</h3>
-              <h5 class="card-text">Course Code: ${course.course_code}</h5>
-              <p class="card-text">Teacher: ${course.teacher_name}</p>
-              <p class="card-text">Department: ${course.department_name}</p>
-              <p class="card-text">Time: <strong>${formatDate(course.created_at)}</strong></p>
-              <a href="./course_detail.html?id=${course.id}" class="btn btn-primary">Details</a>
-            </div>
-          </div>
-        `;
-        allCourse.appendChild(div);
+          `;
+        parent.appendChild(li);
       });
     });
-  };
+};
 
+const loadCoursesByDepartment = (search) => {
+  const token = localStorage.getItem("authToken");
+  fetch(`http://127.0.0.1:8000/api/department/courselist/${search}/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((courses) => {
+      const allCourse = document.getElementById("all-courses");
+      allCourse.innerHTML = "";
 
-  const displayErrorMessage = (message) => {
-    const errorElement = document.getElementById("error-message");
-    errorElement.textContent = message;
-    errorElement.style.display = "block"; // Make error message visible
+      if (courses.length === 0) {
+        // Show a message if no courses are available
+        const noCourseMessage = document.createElement("p");
+        noCourseMessage.textContent = "No courses to show.";
+        noCourseMessage.style.textAlign = "center";
+        noCourseMessage.style.fontWeight = "bold";
+        noCourseMessage.style.fontSize = "18px";
+        noCourseMessage.style.color = "#ff0000"; // Red color for emphasis
+        noCourseMessage.style.marginTop = "20px";
+        allCourse.appendChild(noCourseMessage);
+      } else {
+        // Display courses if available
+        courses.forEach((course) => {
+          const div = document.createElement("div");
+          div.classList.add("col-sm-6");
+          div.innerHTML = `
+            <div class="card">
+              <div class="card-body">
+                <h3 class="card-title">Course Name: ${course.course_name}</h3>
+                <h5 class="card-text">Course Code: ${course.course_code}</h5>
+                <p class="card-text">Teacher: ${course.teacher_name}</p>
+                <p class="card-text">Department: ${course.department_name}</p>
+                <p class="card-text">Time: <strong>${formatDate(
+                  course.created_at
+                )}</strong></p>
+                <a href="./course_detail.html?id=${
+                  course.id
+                }" class="btn btn-primary">Details</a>
+              </div>
+            </div>
+          `;
+          allCourse.appendChild(div);
+        });
+      }
+    });
+};
+
+const displayErrorMessage = (message) => {
+  const errorElement = document.getElementById("error-message");
+  errorElement.textContent = message;
+  errorElement.style.display = "block"; // Make error message visible
 };

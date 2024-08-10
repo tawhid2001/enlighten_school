@@ -153,3 +153,11 @@ main{
     box-shadow: 4px 4px 8px gray;
     border-radius: 4px;
 }
+
+.customBox-2{
+  border: 1px solid gray;
+  margin: auto;
+  margin-top: 50px;
+  box-shadow: 4px 4px 8px gray;
+  border-radius: 4px;
+}
