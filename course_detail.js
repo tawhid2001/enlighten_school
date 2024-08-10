@@ -356,6 +356,8 @@ const getResult = async (enrolledId) => {
 
 const fetchEnrollmentId = (studentId, courseId) => {
   const token = localStorage.getItem("authToken");
+  console.log(courseId);
+
   fetch(`https://enlighten-institute.onrender.com/api/enrollment/student/${studentId}/course/${courseId}/`, {
     method: 'GET',
     headers: {
@@ -492,7 +494,6 @@ const populateForm = async () => {
 
 const submitResult = async (event) => {
   event.preventDefault(); // Prevent the default form submission
-
   const enrollmentId = getQueryParams("enrollmentId");
   const courseId = getQueryParams("courseId");
   const marks = document.getElementById("marks").value;
