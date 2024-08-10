@@ -174,15 +174,24 @@ const createLessonCard = (lesson, userType, courseId, isCompleted) => {
   const isenrolled = isCourseEnrolled(courseId);
   div.className = "card m-5 mx-auto";
   
+  // Function to truncate the content to 15 words
+  const truncateContent = (content, wordLimit) => {
+    const words = content.split(' ');
+    return words.length > wordLimit ? words.slice(0, wordLimit).join(' ') + '...' : content;
+  };
+
+  // Truncate lesson content to 15 words
+  const truncatedContent = truncateContent(lesson.content, 15);
+
   let cardContent = `
     <div class="card-body">
       <h1 class="card-title">Lesson Title: ${lesson.title}</h1>
       <p class="card-text">Time: <small><strong>${formatDate(lesson.created_at)}</strong></small></p>
       ${isCompleted ? `
-        <h5 class="card-text">Lesson Content: ${lesson.content}</h5>
+        <h5 class="card-text">Lesson Content: ${truncatedContent}</h5>
         <button class="btn btn-primary mt-3" disabled>Completed</button>
       ` : `
-        <h5 class="card-text">Lesson Content: ${lesson.content}</h5>
+        <h5 class="card-text">Lesson Content: ${truncatedContent}</h5>
       `}
       <br>
       <a class="btn btn-warning my-2" href="lesson_details.html?lessonId=${lesson.id}&courseId=${courseId}">Details</a>
@@ -202,7 +211,7 @@ const createLessonCard = (lesson, userType, courseId, isCompleted) => {
       </div>
     `;
   } else if (isenrolled) {
-    if(!isCompleted){
+    if (!isCompleted) {
       cardContent += `
       <form id="progressForm_${lesson.id}" onsubmit="submitProgress(event, ${lesson.id})">
         <input type="hidden" name="lesson_id" value="${lesson.id}">
@@ -214,9 +223,6 @@ const createLessonCard = (lesson, userType, courseId, isCompleted) => {
       </form>
     `;
     }
-    else{
-      ''
-    }
   }
 
   cardContent += `</div>`;
@@ -224,6 +230,7 @@ const createLessonCard = (lesson, userType, courseId, isCompleted) => {
   
   return div;
 };
+
 
 
 
