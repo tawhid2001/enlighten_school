@@ -1,3 +1,105 @@
+/* General body styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* General styles for the #initial section */
+#initial {
+    text-align: center;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+
+  .carousel-inner img {
+    object-fit: cover; /* Ensure images cover the carousel area */
+    height: 400px; /* Fixed height for images */
+  }
+  
+  .carousel-caption {
+    background: rgba(71, 71, 94, 0.5); /* Semi-transparent background */
+    padding: 1rem;
+    border-radius: 5px; /* Rounded corners for captions */
+  }
+  
+  .carousel-caption h5 {
+    font-size: 1.75rem; /* Larger font size for headings */
+    color: #fff; /* White text color */
+  }
+  
+  .carousel-caption p {
+    font-size: 1.25rem; /* Larger font size for paragraph */
+    color: #ddd; /* Light gray text color */
+  }
+  
+  /* Styling for buttons */
+  .btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border-color: #007bff; /* Border color */
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #004085; /* Darker border on hover */
+  }
+  
+  .btn-secondary {
+    background-color: #6c757d; /* Secondary button color */
+    border-color: #6c757d; /* Border color */
+  }
+  
+  .btn-secondary:hover {
+    background-color: #5a6268; /* Darker gray on hover */
+    border-color: #545b62; /* Darker border on hover */
+  }
+
+/* Heading styling */
+#initial h2 {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Paragraph styling */
+#initial p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+/* Button styling */
+#initial .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  text-decoration: none;
+  margin: 5px;
+}
+
+#initial .btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+#initial .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+#initial .btn-secondary {
+  background-color: #6388a8;
+  color: #fff;
+  border: none;
+}
+
+#initial .btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+
 #controls{
     border: 1px solid gray;
     margin: auto;
@@ -41,4 +143,13 @@ main{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.customBox{
+    border: 1px solid gray;
+    margin: auto;
+    margin-top: 50px;
+    width: 50%;
+    box-shadow: 4px 4px 8px gray;
+    border-radius: 4px;
 }

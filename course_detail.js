@@ -69,6 +69,7 @@ const toggleButtons = (userType) => {
   const control = document.getElementById("controls");
   const enrollButton = document.getElementById("enroll-btn");
   const courseProgress = document.getElementById("course-progress");
+  document.getElementById("result-container").style.display = "none";
 
 
   if (userType === "student") {
@@ -76,6 +77,7 @@ const toggleButtons = (userType) => {
     if (isCourseEnrolled(courseId)) {
       courseProgress.style.display = "block";
       enrollButton.style.display = "none";
+      document.getElementById("result-container").style.display = "block";
     } else {
       enrollButton.style.display = "block";
       courseProgress.style.display = "none";
@@ -295,7 +297,7 @@ const enrollStudent = () => {
   const token = localStorage.getItem("authToken");
   const studentId = localStorage.getItem("user_id");
   const courseId = getQueryParams("id");
-  fetch("http://127.0.0.1:8000/api/enrollment/list/", {
+  fetch("http://127.0.0.1:8000/api/enrollment/enroll/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -315,6 +317,8 @@ const enrollStudent = () => {
     .then((enrollment) => {
       console.log("Enrollment successful:", enrollment);
       localStorage.setItem(`course_enrolled_${courseId}`, true);
+      const enrollmentId = enrollment.id;
+      localStorage.setItem('enrolledId', enrollmentId);
       window.location.href = `./course_detail.html?id=${courseId}`;
     })
     .catch((error) => {
@@ -333,6 +337,9 @@ const fetchCourseResults = async () => {
         },
       }
     );
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
     const data = await response.json();
     return data;
   } catch (error) {
@@ -347,9 +354,35 @@ const getResult = async (enrolledId) => {
   console.log(results);
   const result = results.find((result) => Number(result.enrollment) === Number(enrolledId));
   return result
-    ? { resultId:result.id, marks: result.marks, feedback: result.feedback }
-    : { marks: "N/A", feedback: "N/A" };
+    ? { resultId: result.id, marks: result.marks, feedback: result.feedback }
+    : { resultId: "N/A", marks: "N/A", feedback: "N/A" };
 };
+
+const showResult = async () => {
+  const enrolledId = localStorage.getItem("enrolledId");
+  if (!enrolledId) {
+    console.error("No enrolled ID found in local storage.");
+    return;
+  }
+
+  const result = await getResult(enrolledId);
+  const resultcon = document.getElementById("result-con");
+  
+  if (!resultcon) {
+    console.error("Element with ID 'result-con' not found.");
+    return;
+  }
+
+  const div = document.createElement("div");
+  div.innerHTML = `
+    <p class = "h4">Marks: ${result.marks}</p>
+    <p class = "h4">Feedback: ${result.feedback}</p>
+  `;
+  resultcon.appendChild(div);
+}
+
+// Call the showResult function to display the results
+showResult();
 
 // Populate enrolled students list and their results
 const enrolledStudentList = async () => {
@@ -362,12 +395,15 @@ const enrolledStudentList = async () => {
     );
     const data = await response.json();
     console.log(data); // This will log the enrolled students data
-    const enrolledStudentsList = document.getElementById(
-      "enrolled-students-list"
-    );
+    const enrolledStudentsList = document.getElementById("enrolled-students-list");
 
     // Clear any existing rows
     enrolledStudentsList.innerHTML = "";
+
+    if (data.length === 0) {
+      enrolledStudentsList.innerHTML = "<tr><td colspan='7' class='text-center text-danger h4'>No students enrolled yet</td></tr>";
+      return; // Exit the function early as there's no data to process
+    }
 
     for (const enrollment of data) {
       const student = enrollment.student;
@@ -407,6 +443,7 @@ const enrolledStudentList = async () => {
     console.error("Error fetching enrolled students:", error);
   }
 };
+
 
 // Submit results for a student
 

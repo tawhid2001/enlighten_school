@@ -93,7 +93,7 @@ const courseDetailinfo = (courseId) => {
   const disenroll = (enrollmentId, courseId) => {
     const token = localStorage.getItem("authToken");
   
-    fetch(`http://127.0.0.1:8000/api/enrollment/list/${enrollmentId}/`, {
+    fetch(`http://127.0.0.1:8000/api/enrollment/enroll/${enrollmentId}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -112,5 +112,7 @@ const courseDetailinfo = (courseId) => {
         alert("Failed to disenroll from the course.");
       });
   };
+
+
 
 
