@@ -504,7 +504,7 @@ const submitResult = async (event) => {
   if (marks && feedback) {
     const url = isEdit
       ? `https://enlighten-institute.onrender.com/api/enrollment/edit-course-results/${resultId.resultId}/`
-      : `https://enlighten-institute.onrender.comapi/enrollment/course-results/`;
+      : `https://enlighten-institute.onrender.com/api/enrollment/course-results/`;
     const method = isEdit ? "PUT" : "POST";
 
     // Perform the fetch request
