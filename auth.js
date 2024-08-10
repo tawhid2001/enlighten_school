@@ -38,6 +38,7 @@ const handleLogin = (event) => {
         username: formData.get("username"),
         password: formData.get("password"),
     };
+
     fetch("https://enlighten-institute.onrender.com/api/auth/login/", {
         method: "POST",
         headers: {
@@ -54,7 +55,27 @@ const handleLogin = (event) => {
     .then(data => {
         console.log("Login successful:", data);
         localStorage.setItem("authToken", data.key);
-        window.location.href = "./index.html";
+        
+        // Fetch the user profile to get the user_type
+        return fetch("https://enlighten-institute.onrender.com/api/auth/user/", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Token ${data.key}`,
+            },
+        });
+    })
+    .then(response => response.json())
+    .then(userData => {
+        console.log("User profile:", userData);
+        localStorage.setItem("user_type", userData.user_type);
+        
+        // Redirect based on user_type
+        if (userData.user_type === "student") {
+            window.location.href = "./enrolled_course.html";
+        } else {
+            window.location.href = "./index.html";
+        }
     })
     .catch(error => {
         console.error('Login error:', error.message);
