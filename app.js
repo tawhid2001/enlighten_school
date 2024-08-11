@@ -72,6 +72,7 @@ const loadCourses = () => {
         div.classList.add("col-sm-6");
         div.innerHTML = `
           <div class="card m-2 customBox-2">
+          <img src="${course.image}" class="card-img-top" alt="...">
             <div class="card-body">
               <h3 class="card-title">Course Name: ${course.course_name}</h3>
               <h5 class="card-text">Course Code: ${course.course_code}</h5>
