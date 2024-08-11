@@ -82,7 +82,7 @@
       const token = localStorage.getItem("authToken");
       if(token){
         document.getElementById("initial").style.display = 'none';
-        document.getElementById("logout-btn").style.display = 'block';
+        document.getElementById("logout-con").style.display = 'block';
         const user_type = localStorage.getItem("user_type");
         document.addEventListener("DOMContentLoaded", loadCourses);
         if(user_type=='student'){
@@ -90,7 +90,7 @@
         }
       }
       else{
-        document.getElementById("logout-btn").style.display = 'none';
+        document.getElementById("logout-con").style.display = 'none';
       }
     </script>
     <script
