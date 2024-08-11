@@ -14,6 +14,7 @@ const getCourseDetail = () => {
       const div = document.createElement("div");
       div.innerHTML = `
           <div class="card m-5 mx-auto">
+            <img src="https://enlighten-institute.onrender.com${course.image}" class="card-img-top custom-img" alt="Course Image">
             <div class="card-body">
               <h1 class="card-title">Course Name: ${course.course_name}</h1>
               <h5 class="card-text">Course Code: ${course.course_code}</h5>
@@ -103,28 +104,30 @@ const editCourse = (event) => {
   const courseId = getQueryParams("id");
 
   const form = document.getElementById("edit-course");
-  const formData = new FormData(form);
+  const formData = new FormData(form); // Use FormData to handle file uploads
   const token = localStorage.getItem("authToken");
-  console.log(token);
 
-  const editcourseData = {
-    course_name: formData.get("edit_course_name"),
-    course_code: formData.get("edit_course_code"),
-    description: formData.get("editDescription"),
-  };
+  // Create a new FormData object to include the image file
+  const editcourseData = new FormData();
+  editcourseData.append("course_name", formData.get("edit_course_name"));
+  editcourseData.append("course_code", formData.get("edit_course_code"));
+  editcourseData.append("description", formData.get("editDescription"));
+  editcourseData.append("image", formData.get("edit_image")); // Append the image
 
   fetch(`https://enlighten-institute.onrender.com/api/course/courselist/${courseId}/`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Token ${token}`,
     },
-    body: JSON.stringify(editcourseData),
+    body: editcourseData,
   })
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
       $("#editModal").modal("hide");
+    })
+    .catch((error) => {
+      console.error("Error updating course:", error);
     });
 };
 

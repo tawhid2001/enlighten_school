@@ -18,31 +18,46 @@ const getUserDetails = () => {
 getUserDetails();
 
 
-const addCourse =(event) =>{
+const addCourse = (event) => {
   event.preventDefault();
+  
   const form = document.getElementById("add-course");
   const formData = new FormData(form);
+  
+  // Generate slug
+  const courseName = formData.get("course_name");
+  const slug = courseName.toLowerCase().replace(/ /g, '-');
+  
+  formData.append('slug', slug);  // Append slug to FormData
+
   const token = localStorage.getItem("authToken");
   
-  const courseData = {
-    course_name: formData.get("course_name"),
-    course_code: formData.get("course_code"),
-    description: formData.get("description"),
-    slug: formData.get("course_name").toLowerCase().replace(/ /g, '-'),
-    department: formData.get("department"),
-  };
-  fetch("https://enlighten-institute.onrender.com/api/course/courselist/",{
+  fetch("https://enlighten-institute.onrender.com/api/course/courselist/", {
     method: "POST",
-    headers:{
-      "Content-Type":"application/json",
-      Authorization : `Token ${token}`,
+    headers: {
+      "Authorization": `Token ${token}`,
+      // Do not set Content-Type when using FormData
     },
-    body : JSON.stringify(courseData),
-  }).then(res=>res.json())
-  .then(data=>{
-    window.location.href = "./index.html";
+    body: formData,
   })
+  .then(res => {
+    if (!res.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return res.json();
+  })
+  .then(data => {
+    if (data && data.id) {
+      window.location.href = "./index.html";
+    } else {
+      console.error('Unexpected response data:', data);
+    }
+  })
+  .catch(error => {
+    console.error('Error adding course:', error);
+  });
 };
+
 
 
 const formatDate = (dateString) => {
@@ -50,9 +65,10 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
+
+
 const loadCourses = () => {
   const token = localStorage.getItem('authToken');
-  
   
   fetch("https://enlighten-institute.onrender.com/api/course/courselist/", {
     method: 'GET',
@@ -66,13 +82,14 @@ const loadCourses = () => {
     console.log(courses);
     const allCourse = document.getElementById("all-courses");
     allCourse.innerHTML = '';
-    if(courses.length > 0){
+    if (courses.length > 0) {
       courses.forEach((course) => {
         const div = document.createElement("div");
-        div.classList.add("col-sm-6");
+        div.classList.add("container");
+        console.log(course.image);
         div.innerHTML = `
-          <div class="card m-2 customBox-2">
-          <img src="${course.image}" class="card-img-top" alt="...">
+          <div class="card w-100 m-2">
+            <img src="https://enlighten-institute.onrender.com${course.image}" class="card-img-top custom-img" alt="Course Image">
             <div class="card-body">
               <h3 class="card-title">Course Name: ${course.course_name}</h3>
               <h5 class="card-text">Course Code: ${course.course_code}</h5>
@@ -83,11 +100,13 @@ const loadCourses = () => {
         `;
         allCourse.appendChild(div);
       });
-    }else{
+    } else {
       allCourse.innerHTML = '<p class="h1 p-4 m-4 text-danger">No courses to show</p>';
     }
   })
   .catch((error) => {
     console.error("Error loading courses:", error);
+    const allCourse = document.getElementById("all-courses");
+    allCourse.innerHTML = '<p class="h1 p-4 m-4 text-danger">Failed to load courses. Please try again later.</p>';
   });
 };

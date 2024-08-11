@@ -2,7 +2,6 @@ fetch("navbar.html")
   .then((res) => res.text())
   .then((data) => {
     document.getElementById("navbar").innerHTML = data;
-    // Assign Auth Element
 
     const navElement = document.getElementById("nav-element");
     const token = localStorage.getItem("authToken");
@@ -10,63 +9,49 @@ fetch("navbar.html")
     if (token) {
       const user_type = localStorage.getItem("user_type");
 
-      if (user_type == "teacher") {
+      if (user_type === "teacher") {
         navElement.innerHTML += `
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex">
-            <li class="nav-item">
-              <a class="nav-link" href="./add_course.html">Add Course</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./profile.html">Profile</a>
-            </li>
-          </div>
-          <div>
-            <li class="nav-item">
-              <a class="nav-link" onclick="handleLogout()">Logout</a>
-            </li>
-          </div>
-        </div>
+          <li class="nav-item">
+            <a class="nav-link" href="./add_course.html">Add Course</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./profile.html">Profile</a>
+          </li>
         `;
-      } else if (user_type == "student") {
+      } else if (user_type === "student") {
         navElement.innerHTML += `
-        <div class="d-flex justify-content-between align-items-center">
-          <div class="d-flex">
-            <li class="nav-item">
-              <a class="nav-link" href="./enrolled_course.html">Enrolled Courses</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./profile.html">Profile</a>
-            </li>
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Department
-              </button>
-              <ul class="dropdown-menu" id="drop-department">
-                <li><a class="dropdown-item" href="./index.html">All Departments</a></li>
-              </ul>
-            </div>
+          <li class="nav-item">
+            <a class="nav-link" href="./enrolled_course.html">Enrolled Courses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./profile.html">Profile</a>
+          </li>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Department
+            </button>
+            <ul class="dropdown-menu" id="drop-department">
+              <li><a class="dropdown-item" href="./index.html">All Departments</a></li>
+            </ul>
           </div>
-          <div>
-            <li class="nav-item">
-              <a class="nav-link" onclick="handleLogout()">Logout</a>
-            </li>
-          </div>
-        </div>
         `;
       }
+
+      // Add Logout button on the right
+      const logoutNav = document.querySelector(".navbar-nav:last-child");
+      logoutNav.innerHTML = `
+        <li class="nav-item">
+          <a class="nav-link" onclick="handleLogout()" style="cursor: pointer;">Logout</a>
+        </li>
+      `;
     } else {
-      navElement.innerHTML += ` 
-      <div class="d-flex justify-content-between align-items-center">
-        <div>
-          <li class="nav-item">
-            <a class="nav-link" href="./login.html">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./registration.html">Registration</a>
-          </li>
-        </div>
-      </div>
+      navElement.innerHTML += `
+        <li class="nav-item">
+          <a class="nav-link" href="./login.html">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./registration.html">Registration</a>
+        </li>
       `;
     }
   });

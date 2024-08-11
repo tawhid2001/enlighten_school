@@ -156,8 +156,25 @@ main{
 
 .customBox-2{
   border: 1px solid gray;
-  margin: auto;
   margin-top: 50px;
   box-shadow: 4px 4px 8px gray;
   border-radius: 4px;
 }
+
+.logout-btn {
+  color: #1b1a1a; /* White text color */
+  font-weight: 400; /* Semi-bold text */
+  padding: 4px 4px; /* More padding for a larger button */
+  border-radius: 5px; /* Fully rounded corners */
+  background-color: #ff004c; /* Blue background color */
+  border: 2px solid transparent; /* Transparent border */
+  text-decoration: none; /* Remove underline */
+}
+
+.logout-btn:hover {
+  background-color: #ffffff; /* White background on hover */
+  color: #0a0a0a; /* Blue text color on hover */
+  border-color: #ff0000; /* Blue border on hover */
+}
+
+

@@ -69,7 +69,8 @@
     </div>
 
     <!-- All Courses -->
-    <div class="row w-75 mx-auto mt-5" id="all-courses"></div>
+    <div class="d-flex flex-column flex-sm-row justify-content-center gap-4 mt-5" id="all-courses"></div>
+
 
     <!-- Error message -->
     <div id="error-message" style="display: none; color: red"></div>
@@ -81,11 +82,15 @@
       const token = localStorage.getItem("authToken");
       if(token){
         document.getElementById("initial").style.display = 'none';
+        document.getElementById("logout-btn").style.display = 'block';
         const user_type = localStorage.getItem("user_type");
         document.addEventListener("DOMContentLoaded", loadCourses);
         if(user_type=='student'){
           document.addEventListener("DOMContentLoaded", loadDepartments);
         }
+      }
+      else{
+        document.getElementById("logout-btn").style.display = 'none';
       }
     </script>
     <script

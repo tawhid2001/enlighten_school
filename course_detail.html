@@ -75,70 +75,74 @@
 
     <!-- Edit Modal course -->
     <div
-      class="modal fade"
-      id="editModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="edit-course" onsubmit="editCourse(event)">
-              <div class="mb-3">
-                <label for="edit_course_name" class="form-label"
-                  >Course Name</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="edit_course_name"
-                  name="edit_course_name"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="edit_course_code" class="form-label"
-                  >Course Code</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="edit_course_code"
-                  name="edit_course_code"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="editDescription" class="form-label"
-                  >Description</label
-                >
-                <textarea
-                  class="form-control"
-                  id="editDescription"
-                  rows="3"
-                  name="editDescription"
-                  required
-                ></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">
-                Save Changes
-              </button>
-            </form>
-          </div>
+    class="modal fade"
+    id="editModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Course</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-course" onsubmit="editCourse(event)" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="edit_course_name" class="form-label">Course Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="edit_course_name"
+                name="edit_course_name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="edit_course_code" class="form-label">Course Code</label>
+              <input
+                type="text"
+                class="form-control"
+                id="edit_course_code"
+                name="edit_course_code"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="editDescription" class="form-label">Description</label>
+              <textarea
+                class="form-control"
+                id="editDescription"
+                rows="3"
+                name="editDescription"
+                required
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="edit_image" class="form-label">Course Image</label>
+              <input
+                type="file"
+                class="form-control"
+                id="edit_image"
+                name="edit_image"
+                accept="image/*"
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Save Changes
+            </button>
+          </form>
         </div>
       </div>
     </div>
-
+  </div>
+  
     <script src="./navbar.js"></script>
     <script src="./auth.js"></script>
     <script src="./app.js"></script>
