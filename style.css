@@ -172,7 +172,7 @@ main{
 }
 
 .logout-btn:hover {
-  background-color: #ffffff; /* White background on hover */
+  background-color: #ff3737; /* White background on hover */
   color: #0a0a0a; /* Blue text color on hover */
   border-color: #ff0000; /* Blue border on hover */
 }
