@@ -11,17 +11,27 @@ fetch("navbar.html")
       const user_type = localStorage.getItem("user_type");
       if (user_type == "teacher") {
         navElement.innerHTML += `
+        <div class = "d-flex justify-content-around">
+        <div>
         <li class="nav-item">
         <a class="nav-link" href="./add_course.html">Add Course</a>
         </li>
         <li class="nav-item">
         <a class="nav-link" href="./profile.html">Profile</a>
         </li>
-      <li class="nav-item">
+        </div>
+        <div>
+        <li class="nav-item">
         <a class="nav-link" onclick="handleLogout()">Logout</a>
-      </li>`;
+        </li>
+        </div>
+      </div>
+      
+      `;
       } else if (user_type == "student") {
         navElement.innerHTML += `
+      <div class= "d-flex justify-content-around">
+      <div>
       <li class="nav-item">
         <li><a class="nav-link" href="./enrolled_course.html">enrolled Courses</a></li>
       </li>
@@ -36,9 +46,13 @@ fetch("navbar.html")
         <li><a class="dropdown-item" href="./index.html">All Department</a></li>
       </ul>
     </div>
+      </div>
+    <div>
     <li class="nav-item">
         <a class="nav-link" onclick="handleLogout()">Logout</a>
       </li>
+    </div>
+      </div>
       `;
       }
     } else {
