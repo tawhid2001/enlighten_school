@@ -75,12 +75,15 @@ const loadDepartments = () => {
 
 const loadCoursesByDepartment = (search) => {
   const token = localStorage.getItem("authToken");
-  fetch(`https://enlighten-institute.onrender.com/api/department/courselist/${search}/`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
+  fetch(
+    `https://enlighten-institute.onrender.com/api/department/courselist/${search}/`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  )
     .then((res) => res.json())
     .then((courses) => {
       const allCourse = document.getElementById("all-courses");
@@ -100,10 +103,14 @@ const loadCoursesByDepartment = (search) => {
         // Display courses if available
         courses.forEach((course) => {
           const div = document.createElement("div");
-          div.classList.add("col-sm-6");
+          div.classList.add("col-sm-4");
+          div.classList.add("mt-4");
           div.innerHTML = `
             <div class="card">
-              <div class="card-body">
+            <img src="https://enlighten-institute.onrender.com${
+              course.image
+            }" class="card-img-top custom-img"
+              <div class="card-body p-4">
                 <h3 class="card-title">Course Name: ${course.course_name}</h3>
                 <h5 class="card-text">Course Code: ${course.course_code}</h5>
                 <p class="card-text">Teacher: ${course.teacher_name}</p>
