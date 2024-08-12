@@ -107,9 +107,7 @@ const loadCoursesByDepartment = (search) => {
           div.classList.add("mt-4");
           div.innerHTML = `
             <div class="card">
-            <img src="https://enlighten-institute.onrender.com${
-              course.image
-            }" class="card-img-top custom-img"
+           <img src="https://enlighten-institute.onrender.com${course.image}" class="card-img-top custom-img" alt="Course Image">
               <div class="card-body p-4">
                 <h3 class="card-title">Course Name: ${course.course_name}</h3>
                 <h5 class="card-text">Course Code: ${course.course_code}</h5>

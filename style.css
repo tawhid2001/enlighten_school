@@ -181,3 +181,24 @@ main{
 #footer-placeholder{
   margin-top: 50px;
 }
+
+.custom-img {
+  width: 100%; /* Full width of the card */
+  height: 300px; /* Fixed height for the image */
+  object-fit: cover; /* Ensures the image covers the entire area */
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.card-body {
+  flex-grow: 1; /* Ensures the body of the card takes up remaining space */
+}
+
+.card-title, .card-text {
+  margin-bottom: 10px;
+}
