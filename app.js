@@ -85,10 +85,11 @@ const loadCourses = () => {
     if (courses.length > 0) {
       courses.forEach((course) => {
         const div = document.createElement("div");
-        div.classList.add("container");
+        div.classList.add("col-sm-4");
+        div.classList.add("mt-4");
         console.log(course.image);
         div.innerHTML = `
-          <div class="card w-100 m-2">
+          <div class="card">
             <img src="https://enlighten-institute.onrender.com${course.image}" class="card-img-top custom-img" alt="Course Image">
             <div class="card-body">
               <h3 class="card-title">Course Name: ${course.course_name}</h3>
