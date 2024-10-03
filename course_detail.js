@@ -12,9 +12,10 @@ const getCourseDetail = () => {
       console.log(course);
       const courseDetail = document.getElementById("course-detail");
       const div = document.createElement("div");
+      const imageUrl = course.image_url ? course.image_url : 'images/default.jpg';
       div.innerHTML = `
           <div class="card m-5 mx-auto">
-            <img src="https://enlighten-institute.onrender.com${course.image}" class="card-img-top custom-img" alt="Course Image">
+            <img src="${imageUrl}" class="card-img-top custom-card-img" alt="Course Image">
             <div class="card-body">
               <h1 class="card-title">Course Name: ${course.course_name}</h1>
               <h5 class="card-text">Course Code: ${course.course_code}</h5>
@@ -99,37 +100,79 @@ const getUserType = () => {
   return localStorage.getItem("user_type");
 };
 
-const editCourse = (event) => {
+const editCourse = async (event) => {
   event.preventDefault();
-  const courseId = getQueryParams("id");
+  const courseId = getQueryParams("id");  // Retrieve the course ID from the URL or query parameters
 
   const form = document.getElementById("edit-course");
-  const formData = new FormData(form); // Use FormData to handle file uploads
+  const formData = new FormData(form);
   const token = localStorage.getItem("authToken");
 
-  // Create a new FormData object to include the image file
-  const editcourseData = new FormData();
-  editcourseData.append("course_name", formData.get("edit_course_name"));
-  editcourseData.append("course_code", formData.get("edit_course_code"));
-  editcourseData.append("description", formData.get("editDescription"));
-  editcourseData.append("image", formData.get("edit_image")); // Append the image
+  // Upload the image to Imgbb if a new image is provided
+  const imageFile = formData.get("edit_image");
+  let imageUrl = '';
 
-  fetch(`https://enlighten-institute.onrender.com/api/course/courselist/${courseId}/`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Token ${token}`,
-    },
-    body: editcourseData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      $("#editModal").modal("hide");
-    })
-    .catch((error) => {
-      console.error("Error updating course:", error);
+  if (imageFile && imageFile.size > 0) {
+    const imgFormData = new FormData();
+    imgFormData.append('image', imageFile);
+
+    try {
+      const imgbbResponse = await fetch('https://api.imgbb.com/1/upload?key=74a46b9f674cfe097a70c2c8824668a7', {
+        method: 'POST',
+        body: imgFormData
+      });
+
+      const imgbbData = await imgbbResponse.json();
+
+      if (imgbbData.status === 200) {
+        imageUrl = imgbbData.data.url;  // Store the image URL
+      } else {
+        alert('Image upload failed!');
+        return;
+      }
+    } catch (error) {
+      console.error('Error uploading to Imgbb:', error);
+      alert('Image upload failed!');
+      return;
+    }
+  }
+
+  // Prepare the data to be sent to the backend
+  const courseData = {
+    course_name: formData.get("edit_course_name"),
+    course_code: formData.get("edit_course_code"),
+    description: formData.get("editDescription"),
+    image_url: imageUrl || undefined,  // Include image_url if present
+  };
+
+  // Send the PUT request to update the course
+  try {
+    const response = await fetch(`https://enlighten-institute.onrender.com/api/course/courselist/${courseId}/`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(courseData),  // Send the course data as JSON
     });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      $("#editModal").modal("hide");  // Close the modal after success
+      alert('Course updated successfully!');
+    } else {
+      const errorData = await response.json();
+      console.error('Error response:', errorData);
+      alert('Failed to update course!');
+    }
+  } catch (error) {
+    console.error("Error updating course:", error);
+    alert('Failed to update course!');
+  }
 };
+
+
 
 const deleteCourse = () => {
   const courseId = getQueryParams("id");
@@ -197,7 +240,7 @@ const createLessonCard = (lesson, userType, courseId, isCompleted) => {
         <h5 class="card-text">Lesson Content: ${truncatedContent}</h5>
       `}
       <br>
-      <a class="btn btn-warning my-2" href="lesson_details.html?lessonId=${lesson.id}&courseId=${courseId}">Details</a>
+      
   `;
 
   if (userType === "teacher") {

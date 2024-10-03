@@ -8,7 +8,7 @@ const getQueryParams = (param) => {
     const lessonId = getQueryParams("lessonId");
     const token = localStorage.getItem("authToken");
   
-    fetch(`https://enlighten-institute.onrender.com/api/course/lesson/${courseId}`, {
+    fetch(`https://enlighten-institute.onrender.com/api/course/lesson/${lessonId}`, {
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -35,6 +35,8 @@ const getQueryParams = (param) => {
   event.preventDefault();
   const lessonId = getQueryParams("lessonId");
   const courseId = getQueryParams("courseId");
+  console.log(lessonId);
+  console.log(courseId);
   const form = document.getElementById("edit-lesson");
   const formData = new FormData(form);
   const token = localStorage.getItem("authToken");

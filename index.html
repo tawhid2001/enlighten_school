@@ -16,29 +16,28 @@
     <!-- Navbar -->
     <div id="navbar"></div>
 
-    <div id="initial" class="text-center mt-5">
-      <!-- Carousel -->
-      <div id="carouselExampleCaptions" class="carousel slide mb-5">
+       <!-- Carousel -->
+       <div id="carouselExampleCaptions" class="carousel slide m-4">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="https://via.placeholder.com/800x400?text=Welcome+to+Enlighten+Institute" class="d-block w-100" alt="Welcome Slide">
+            <img src="images/carousal1.jpg" class="d-block w-100" alt="Welcome Slide">
             <div class="carousel-caption d-none d-md-block">
               <h5>Welcome to Enlighten Institute</h5>
-              <p>Empowering minds through education.</p>
+              <p class="text-white">Empowering minds through education.</p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="https://via.placeholder.com/800x400?text=Expand+Your+Knowledge" class="d-block w-100" alt="Knowledge Slide">
+            <img src="images/carousal2.jpg" class="d-block w-100" alt="Knowledge Slide">
             <div class="carousel-caption d-none d-md-block">
               <h5>Expand Your Knowledge</h5>
-              <p>Acquire new skills and engage with our diverse courses.</p>
+              <p class="text-white">Acquire new skills and engage with our diverse courses.</p>
             </div>
           </div>
           <div class="carousel-item">
-            <img src="https://via.placeholder.com/800x400?text=Join+Our+Community" class="d-block w-100" alt="Community Slide">
+            <img src="images/carousal3.jpg" class="d-block w-100" alt="Community Slide">
             <div class="carousel-caption d-none d-md-block">
               <h5>Join Our Community</h5>
-              <p>Become a part of our lifelong learning journey.</p>
+              <p class="text-white">Become a part of our lifelong learning journey.</p>
             </div>
           </div>
         </div>
@@ -52,7 +51,9 @@
         </button>
       </div>
 
-      <h2>Welcome to Enlighten Institute!</h2>
+    <div id="initial">
+      <div>
+        <h2>Welcome to Enlighten Institute!</h2>
       <p>
         At Enlighten Institute, we believe in empowering minds through education
         and fostering a community of lifelong learners.
@@ -66,10 +67,15 @@
         <a href="./login.html" class="btn btn-primary">Login</a> or
         <a href="./registration.html" class="btn btn-secondary">Register</a> now!
       </p>
+      </div>
+      
     </div>
 
     <!-- All Courses -->
-    <div class="row m-5" id="all-courses"></div>
+    <h1 class="text-center mt-4" id="AllCourseTitle">All Courses</h1>
+    <div class="row mx-3 justify-content-center align-items-center" id="all-courses">
+      
+    </div>
 
 
     <!-- Error message -->
@@ -83,8 +89,10 @@
     <script src="./footer.js"></script>
     <script>
       const token = localStorage.getItem("authToken");
+      document.getElementById("AllCourseTitle").style.display = 'none';
       if(token){
         document.getElementById("initial").style.display = 'none';
+        document.getElementById("AllCourseTitle").style.display = 'block';
         const user_type = localStorage.getItem("user_type");
         document.addEventListener("DOMContentLoaded", loadCourses);
         if(user_type === 'student'){

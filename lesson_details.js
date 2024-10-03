@@ -7,7 +7,11 @@ const getLessonDetail = () => {
   const lessonID = getQueryParams("lessonId");
 
   fetch(`https://enlighten-institute.onrender.com/api/course/lesson/${lessonID}`, {
-    Authorization: `Token ${localStorage.getItem("authToken")}`,
+    method: 'GET', // Ensure method is specified
+    headers: {
+      Authorization: `Token ${localStorage.getItem("authToken")}`,
+      'Content-Type': 'application/json',
+    },
   })
     .then((res) => res.json())
     .then((lesson) => {
@@ -19,7 +23,7 @@ const getLessonDetail = () => {
       div.innerHTML = `
             <div class="card-body">
               <h1 class="card-title">Lesson Title: ${lesson.title}</h1>
-              <h5 class="card-text">Lesson Content: ${lesson.content}</h5>
+              <h5 class="card-text" style="white-space: pre-wrap;">Lesson Content: ${lesson.content}</h5>
               <p class="card-text">Time: <small><strong>${formatDate(
                 lesson.created_at
               )}</strong></small></p>
