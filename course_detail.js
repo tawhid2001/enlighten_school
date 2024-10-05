@@ -236,8 +236,14 @@ const createLessonCard = (lesson, userType, courseId, isCompleted) => {
       ${isCompleted ? `
         <h5 class="card-text">Lesson Content: ${truncatedContent}</h5>
         <button class="btn btn-primary mt-3" disabled>Completed</button>
+        <div class="button-center" id="lesson-details-btn">
+          <a href="lesson_details.html?lessonId=${lesson.id}&courseId=${courseId}" class="btn btn-primary">Details</a>
+        </div>
       ` : `
         <h5 class="card-text">Lesson Content: ${truncatedContent}</h5>
+        <div class="button-center" id="lesson-details-btn">
+          <a href="lesson_details.html?lessonId=${lesson.id}&courseId=${courseId}" class="btn btn-primary">Details</a>
+        </div>
       `}
       <br>
       
@@ -245,7 +251,7 @@ const createLessonCard = (lesson, userType, courseId, isCompleted) => {
 
   if (userType === "teacher") {
     cardContent += `
-      <div class="dropdown">
+      <div class="dropdown text-center">
         <button class="btn btn-secondary dropdown-toggle m-4" type="button" id="dropdownMenuButton_${lesson.id}" data-bs-toggle="dropdown" aria-expanded="false">
           Menu
         </button>
