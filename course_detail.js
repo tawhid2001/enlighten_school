@@ -309,11 +309,16 @@ const getLessons = () => {
       const lessonContainer = document.getElementById("lessons");
       lessonContainer.innerHTML = "";
 
-      lessons.forEach((lesson) => {
-        const isCompleted = localStorage.getItem(`lesson_completed_${lesson.id}`) === "true";
-        const lessonCard = createLessonCard(lesson, userType, courseId, isCompleted);
-        lessonContainer.appendChild(lessonCard);
-      });
+      if (lessons.length === 0) {
+        // If there are no lessons, display a message
+        lessonContainer.innerHTML = `<p class = "text-danger text-center">No lessons have been added yet. Please check back later.</p>`;
+      } else {
+        lessons.forEach((lesson) => {
+          const isCompleted = localStorage.getItem(`lesson_completed_${lesson.id}`) === "true";
+          const lessonCard = createLessonCard(lesson, userType, courseId, isCompleted);
+          lessonContainer.appendChild(lessonCard);
+        });
+      }
     })
     .catch((error) => {
       console.error("Error fetching lessons:", error);
