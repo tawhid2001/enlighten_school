@@ -11,21 +11,27 @@
     <!-- Navbar -->
     <div id="navbar"></div>
 
-    <!-- login form -->
-    <div class="mx-auto w-75 mt-5">
-        <form class="row g-3" onsubmit="handleLogin(event)" id="login-form">
-            <div class="col-12">
-              <label for="username" class="form-label">Username</label>
-              <input type="username" class="form-control" id="username" name="username">
-            </div>
-            <div class="col-12">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" name="password">
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary">Log in</button>
-            </div>
-          </form>
+    
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <div class="w-50 m-3 p-3">
+        <img src="images/Login.png" alt="Sign In" class="img-fluid">
+      </div>
+      <!-- login form -->
+    <div class="w-50 m-3 p-3">
+      <form class="row g-3" onsubmit="handleLogin(event)" id="login-form">
+          <div class="col-12">
+            <label for="username" class="form-label">Username</label>
+            <input type="username" class="form-control" id="username" name="username">
+          </div>
+          <div class="col-12">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Log in</button>
+          </div>
+        </form>
+  </div>
     </div>
     
     <div class="text-center text-danger" id="error-message"></div>

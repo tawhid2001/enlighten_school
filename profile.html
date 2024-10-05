@@ -16,27 +16,32 @@
     <!-- Navbar -->
     <div id="navbar"></div>
 
-    <div id="user-edit" class="w-50 m-auto mt-5 edit_user">
-      <h3 class="h3 text-center">Edit User Information</h3>
-      <form id="editUserForm">
-        <div class="form-group">
-          <label for="editUsername">Username</label>
-          <input type="text" class="form-control" id="editUsername" required />
-        </div>
-        <div class="form-group">
-          <label for="editFirstName">First Name</label>
-          <input type="text" class="form-control" id="editFirstName" required />
-        </div>
-        <div class="form-group">
-          <label for="editLastName">Last Name</label>
-          <input type="text" class="form-control" id="editLastName" required />
-        </div>
-        <div class="form-group">
-          <label for="editEmail">Email</label>
-          <input type="email" class="form-control" id="editEmail" required />
-        </div>
-        <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
-      </form>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <div class="w-50 m-3 p-3">
+        <img src="images/profile.png" alt="Sign In" class="img-fluid">
+      </div>
+      <div id="user-edit" class="w-50 m-3 p-3 edit_user">
+        <h3 class="h3 text-center">Edit User Information</h3>
+        <form id="editUserForm">
+          <div class="form-group">
+            <label for="editUsername">Username</label>
+            <input type="text" class="form-control" id="editUsername" required />
+          </div>
+          <div class="form-group">
+            <label for="editFirstName">First Name</label>
+            <input type="text" class="form-control" id="editFirstName" required />
+          </div>
+          <div class="form-group">
+            <label for="editLastName">Last Name</label>
+            <input type="text" class="form-control" id="editLastName" required />
+          </div>
+          <div class="form-group">
+            <label for="editEmail">Email</label>
+            <input type="email" class="form-control" id="editEmail" required />
+          </div>
+          <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+        </form>
+      </div>
     </div>
 
     <div id="footer-placeholder"></div>

@@ -190,6 +190,8 @@ main{
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+
+
 .card:hover{
   transform: translateY(-5px); /* Moves the card up slightly */
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.637); /* Adds a shadow */

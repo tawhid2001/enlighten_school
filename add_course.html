@@ -12,30 +12,35 @@
 
     <!-- add course Form -->
 
-    <div class="mx-auto w-75 mt-5">
-      <form id="add-course" onsubmit="addCourse(event)" enctype="multipart/form-data">
-        <div class="mb-3">
-          <label for="course_name" class="form-label">Course Name</label>
-          <input type="text" class="form-control" id="course_name" name="course_name" required>
-        </div>
-        <div class="mb-3">
-          <label for="course_code" class="form-label">Course Code</label>
-          <input type="text" class="form-control" id="course_code" name="course_code" required>
-        </div>
-        <div class="mb-3">
-          <label for="department" class="form-label">Department</label>
-          <select class="form-control" id="department" name="department" required></select>
-        </div>
-        <div class="mb-3">
-          <label for="description" class="form-label">Description</label>
-          <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="image" class="form-label">Course Image (Optional)</label>
-          <input type="file" class="form-control" id="image" name="image" accept="image/*">
-        </div>
-        <button type="submit" class="btn btn-primary">Add Course</button>
-      </form>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <div class="w-50 m-3 p-3">
+        <img src="images/Computer Class.png" alt="Sign In" class="img-fluid">
+      </div>
+      <div class="w-50 m-3 p-3">
+        <form id="add-course" onsubmit="addCourse(event)" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label for="course_name" class="form-label">Course Name</label>
+            <input type="text" class="form-control" id="course_name" name="course_name" required>
+          </div>
+          <div class="mb-3">
+            <label for="course_code" class="form-label">Course Code</label>
+            <input type="text" class="form-control" id="course_code" name="course_code" required>
+          </div>
+          <div class="mb-3">
+            <label for="department" class="form-label">Department</label>
+            <select class="form-control" id="department" name="department" required></select>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="image" class="form-label">Course Image (Optional)</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+          </div>
+          <button type="submit" class="btn btn-primary">Add Course</button>
+        </form>
+      </div>
     </div>
 
     <div id="footer-placeholder"></div>
