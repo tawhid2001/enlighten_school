@@ -16,6 +16,9 @@ Enlighten School is an e-learning platform built using Django and Django REST Fr
 ## Live Demo
 You can access the live backend of Enlighten School at: [Enlighten School Live](https://enlighten-institute.onrender.com/)
 
+## GitHub Repository
+You can find the backend repository for Enlighten School at: [Enlighten Institute GitHub Repository](https://github.com/tawhid2001/Enlighten_Institute)
+
 ## Important URLs
 
 ### Authentication
