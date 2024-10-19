@@ -1,6 +1,6 @@
 const getUserDetails = () => {
   const token = localStorage.getItem("authToken");
-  fetch("https://enlighten-institute-deployment.vercel.app/api/auth/user/", {
+  fetch("https://enlighten-institute-deployment.vercel.app/api/user/", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
