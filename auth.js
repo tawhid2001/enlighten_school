@@ -15,7 +15,7 @@ const handleRegistration = (event) =>{
     }
     console.log("Registration Data: ", registrationData);
 
-    fetch("https://enlighten-institute.onrender.com/api/auth/registration/", {
+    fetch("https://enlighten-institute-deployment.vercel.app/api/auth/registration/", {
         method:"POST",
         headers: {
             "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const handleLogin = (event) => {
         password: formData.get("password"),
     };
 
-    fetch("https://enlighten-institute.onrender.com/api/auth/login/", {
+    fetch("https://enlighten-institute-deployment.vercel.app/api/auth/login/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const handleLogin = (event) => {
         localStorage.setItem("authToken", data.key);
         
         // Fetch the user profile to get the user_type
-        return fetch("https://enlighten-institute.onrender.com/api/auth/user/", {
+        return fetch("https://enlighten-institute-deployment.vercel.app/api/auth/user/", {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const handleLogin = (event) => {
 
 const handleLogout = () => {
     const token = localStorage.getItem("authToken");
-    fetch("https://enlighten-institute.onrender.com/api/auth/logout/", {
+    fetch("https://enlighten-institute-deployment.vercel.app/api/auth/logout/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

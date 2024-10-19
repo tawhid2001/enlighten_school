@@ -57,7 +57,7 @@ fetch("navbar.html")
   });
 
 const loadDepartments = () => {
-  fetch("https://enlighten-institute.onrender.com/api/department/courselist/")
+  fetch("https://enlighten-institute-deployment.vercel.app/api/department/courselist/")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
@@ -76,7 +76,7 @@ const loadDepartments = () => {
 const loadCoursesByDepartment = (search) => {
   const token = localStorage.getItem("authToken");
   fetch(
-    `https://enlighten-institute.onrender.com/api/department/courselist/${search}/`,
+    `https://enlighten-institute-deployment.vercel.app/api/department/courselist/${search}/`,
     {
       method: "GET",
       headers: {
