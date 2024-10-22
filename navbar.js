@@ -17,6 +17,9 @@ fetch("navbar.html")
           <li class="nav-item">
             <a class="nav-link" href="./profile.html">Profile</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html#contactUs">Contact Us</a>  <!-- Link to Contact Us Section -->
+          </li>
         `;
       } else if (user_type === "student") {
         navElement.innerHTML += `
@@ -26,14 +29,7 @@ fetch("navbar.html")
           <li class="nav-item">
             <a class="nav-link" href="./profile.html">Profile</a>
           </li>
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Department
-            </button>
-            <ul class="dropdown-menu" id="drop-department">
-              <li><a class="dropdown-item" href="./index.html">All Departments</a></li>
-            </ul>
-          </div>
+          
         `;
       }
 
@@ -45,33 +41,20 @@ fetch("navbar.html")
         </li>
       `;
     } else {
-      navElement.innerHTML += `
-        <li class="nav-item">
+      navElementanother = document.getElementById("navbarNav2");
+      navElementanother.innerHTML += `
+        <li class="nav-item nav-login">
           <a class="nav-link" href="./login.html">Login</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./registration.html">Registration</a>
+        <li class="nav-item nav-registration">
+          <a class="nav-link" href="./registration.html">Sign Up</a>
         </li>
       `;
     }
   });
 
-const loadDepartments = () => {
-  fetch("https://enlighten-institute-deployment.vercel.app/api/department/courselist/")
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      data.forEach((item) => {
-        const parent = document.getElementById("drop-department");
-        const li = document.createElement("li");
-        li.classList.add("dropdown-item");
-        li.innerHTML = `
-          <li onclick = "loadCoursesByDepartment('${item.slug}')">${item.name}</li>
-          `;
-        parent.appendChild(li);
-      });
-    });
-};
+
+
 
 const loadCoursesByDepartment = (search) => {
   const token = localStorage.getItem("authToken");

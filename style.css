@@ -278,3 +278,110 @@ main{
   margin: auto;
   margin-top: 50px;
 }
+
+/* Services Section Styles */
+#services {
+  background-color: #6388a8;/* Light background color */
+  padding: 50px 0;
+}
+
+.service-img {
+  width: 80px; /* Set the width of the image */
+  height: 80px; /* Set the height of the image */
+  object-fit: cover; /* Ensures image doesn't get distorted */
+  border-radius: 50%; /* Makes the image circular */
+  margin-right: 20px; /* Space between image and text */
+}
+
+/* Additional Styling for service card text */
+.card-text {
+  font-size: 1rem;
+  color: #6c757d;
+  text-align: left; /* Aligns text to the left */
+}
+
+/* Services Section Title */
+.service-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 40px;
+}
+
+/* Services Card Styles */
+.service-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for cards */
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Card title */
+.service-card .card-title {
+  font-size: 1.5rem;
+  color: #0f2741;
+  margin-top: 5px;
+}
+
+/* Card text */
+.service-card .card-text {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .service-title {
+    font-size: 2rem;
+  }
+
+  .service-card {
+    margin-bottom: 20px;
+  }
+}
+
+.animated-text {
+  display: inline-block; /* Allow text to animate */
+  font-size: 1.5rem; /* Adjust font size as needed */
+  color: #101418; /* Set color for the animated text */
+  font-weight: bold; /* Make the text bold */
+}
+
+
+.nav-login,
+.nav-registration {
+  color: white; /* White text for the links */
+  padding: 0.5rem 1rem;
+  border: 2px solid white; /* White border around the buttons */
+  border-radius: 20px; /* Rounded corners */
+  transition: all 0.3s ease; /* Smooth transition effect */
+  text-transform: uppercase; /* Optional: Make the text uppercase */
+  font-weight: bold; /* Optional: Make the text bold */
+  margin-left: 1rem; /* Add space between the buttons */
+}
+
+/* Custom Styles */
+#contactForm {
+  max-width: 600px; /* Set max-width for the form */
+  margin: auto; /* Center the form */
+}
+
+#contactForm .form-label {
+  font-weight: bold; /* Make labels bold */
+}
+
+#contactForm button {
+  width: 100%; /* Make the button full-width */
+}
+
+#contactUs{
+  background-color: #6388a8;
+  padding: 50px;
+  margin-top: 20px;
+}
