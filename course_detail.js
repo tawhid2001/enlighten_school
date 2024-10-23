@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const reviewForm = document.getElementById('review-form');
   
     // Fetch and display reviews
-    fetch("http://127.0.0.1:8000/api/course/review/")
+    fetch("https://enlighten-institute-deployment.vercel.app/api/course/review/")
         .then(response => response.json())
         .then(data => {
             const reviewsContainer = document.getElementById('reviews');
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
     event.preventDefault();
     const rating = document.getElementById('rating').value;
     const comment = document.getElementById('comment').value;
-    const reviewsUrl = "http://127.0.0.1:8000/api/course/review/"; // Ensure you have the correct URL
+    const reviewsUrl = "https://enlighten-institute-deployment.vercel.app/api/course/review/"; // Ensure you have the correct URL
 
     fetch(reviewsUrl, {
         method: 'POST',
