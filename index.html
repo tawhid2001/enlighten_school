@@ -190,24 +190,191 @@
     </section>
 
     <!-- Contact Us Section -->
-<div id="contactUs">
-  <h1 class="text-center mb-4">Contact Us</h1>
-  <div class="container">
-      <form id="contactForm">
+    <div id="contactUs" class="static-section-background">
+      <h1 class="text-center mb-4">Contact Us</h1>
+      <div class="container">
+        <form id="contactForm">
           <div class="mb-3">
-              <label for="email" class="form-label">Your Email</label>
-              <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+            <label for="email" class="form-label">Your Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              placeholder="Your Email"
+              required
+            />
           </div>
           <div class="mb-3">
-              <label for="message" class="form-label">Your Message</label>
-              <textarea id="message" class="form-control" placeholder="Your Message" required rows="4"></textarea>
+            <label for="message" class="form-label">Your Message</label>
+            <textarea
+              id="message"
+              class="form-control"
+              placeholder="Your Message"
+              required
+              rows="4"
+            ></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Send</button>
-      </form>
-  </div>
-</div>
+        </form>
+      </div>
+    </div>
 
-        
+    <section id="faq" class="my-5 static-section-background">
+      <div class="container">
+        <h2 class="text-center">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq1">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                aria-expanded="false"
+                aria-controls="collapseOne"
+              >
+                How do I enroll in a course?
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse"
+              aria-labelledby="faq1"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Step 1: Navigate to the "Courses" section on the homepage or in
+                the main menu. <br />
+                Step 2: Browse through the available courses and find the course
+                you want to enroll in. <br />
+                Step 3: Click on the course to view its details. <br />
+                Step 4: On the course details page, look for the "Enroll"
+                button. <br />
+                Step 5: Click the "Enroll" button to confirm your enrollment in
+                the course. <br />
+                Step 6: After enrolling, you can access the course from your
+                dashboard.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq2">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseTwo"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                Can I track my course progress?
+              </button>
+            </h2>
+            <div
+              id="collapseTwo"
+              class="accordion-collapse collapse"
+              aria-labelledby="faq2"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Step 1: Log in to your account and navigate to your
+                dashboard.<br />
+                Step 2: In the dashboard, find the "Enrolled Courses" section,
+                where your enrolled courses are listed. <br />Step 3: Select the
+                course for which you want to check your progress.<br />
+                Step 4: Once inside the course, you will see your progress,
+                including completed lessons and remaining tasks.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq3">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseThree"
+                aria-expanded="false"
+                aria-controls="collapseThree"
+              >
+                Can I access my courses on mobile?
+              </button>
+            </h2>
+            <div
+              id="collapseThree"
+              class="accordion-collapse collapse"
+              aria-labelledby="faq3"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Yes, our platform is mobile-friendly and accessible on any
+                device, including phones and tablets.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq7">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseSeven"
+                aria-expanded="false"
+                aria-controls="collapseSeven"
+              >
+                How can I contact customer support?
+              </button>
+            </h2>
+            <div
+              id="collapseSeven"
+              class="accordion-collapse collapse"
+              aria-labelledby="faq7"
+              data-bs-parent="#faqAccordion"
+            >
+              <div class="accordion-body">
+                Step 1: Go to the "Contact Us" section on the website.
+                <br />Step 2: Enter your email address in the provided field.<br />
+                Step 3: Write your message or concern in the message box.<br />
+                Step 4: Click the "Submit" or "Send" button to send your message
+                to our support team.<br />
+                Step 5: Wait for a response from our customer support, which
+                will be sent to the email address you provided.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why-choose-us" class="my-5 static-section-background">
+      <div class="container">
+        <h2 class="text-center">Why Choose Us?</h2>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Flexible Learning</h4>
+                <p class="card-text">
+                  Access your courses anytime, anywhere, on any device.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="card">
+              <div class="card-body">
+                <h4 class="card-title">Expert Instructors</h4>
+                <p class="card-text">
+                  Learn from experienced teachers and industry professionals.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Error message -->
     <div id="error-message" style="display: none; color: red"></div>
@@ -305,27 +472,32 @@
 
       loadDepartments();
 
-      document.getElementById('contactForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
 
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+          const email = document.getElementById("email").value;
+          const message = document.getElementById("message").value;
 
-            fetch('https://enlighten-institute-deployment.vercel.app/api/contact/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, message }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                alert('Message sent!');
+          fetch(
+            "https://enlighten-institute-deployment.vercel.app/api/contact/",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ email, message }),
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+              alert("Message sent!");
             })
             .catch((error) => {
-                console.error('Error:', error);
-                alert('Error sending message.');
+              console.error("Error:", error);
+              alert("Error sending message.");
             });
         });
     </script>

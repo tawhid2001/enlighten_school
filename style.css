@@ -380,7 +380,7 @@ main{
   width: 100%; /* Make the button full-width */
 }
 
-#contactUs{
+.static-section-background{
   background-color: #6388a8;
   padding: 50px;
   margin-top: 20px;

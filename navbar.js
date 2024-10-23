@@ -17,9 +17,6 @@ fetch("navbar.html")
           <li class="nav-item">
             <a class="nav-link" href="./profile.html">Profile</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./index.html#contactUs">Contact Us</a>  <!-- Link to Contact Us Section -->
-          </li>
         `;
       } else if (user_type === "student") {
         navElement.innerHTML += `
@@ -28,9 +25,6 @@ fetch("navbar.html")
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./profile.html">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./index.html#contactUs">Contact Us</a>  <!-- Link to Contact Us Section -->
           </li>
         `;
       }
