@@ -385,3 +385,8 @@ main{
   padding: 50px;
   margin-top: 20px;
 }
+
+.carousel-item {
+  display: flex;
+  justify-content: center; /* Center the items */
+}

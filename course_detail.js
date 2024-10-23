@@ -62,6 +62,106 @@ const getCourseDetail = () => {
   toggleButtons(userType);
 };
 
+document.addEventListener('DOMContentLoaded', function() {
+  const courseId = getQueryParams("id");
+  const reviewForm = document.getElementById('review-form');
+  
+    // Fetch and display reviews
+    fetch("http://127.0.0.1:8000/api/course/review/")
+        .then(response => response.json())
+        .then(data => {
+            const reviewsContainer = document.getElementById('reviews');
+            reviewsContainer.innerHTML = '';
+            data.forEach(review => {
+                const reviewCard = createReviewCard(review);
+                reviewsContainer.appendChild(reviewCard);
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching reviews:", error);
+        });
+
+  // Handle review submission
+  reviewForm.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const rating = document.getElementById('rating').value;
+    const comment = document.getElementById('comment').value;
+    const reviewsUrl = "http://127.0.0.1:8000/api/course/review/"; // Ensure you have the correct URL
+
+    fetch(reviewsUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${localStorage.getItem('authToken')}`
+        },
+        body: JSON.stringify({
+            course: courseId,
+            rating: rating,
+            comment: comment
+        })
+    })
+    .then(response => response.json())
+    .then(review => {
+        const reviewCard = createReviewCard(review);
+        document.getElementById('reviews').appendChild(reviewCard);
+        reviewForm.reset();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+});
+
+// Create a review card
+function createReviewCard(review) {
+  const userId = localStorage.getItem("user_id");
+  const card = document.createElement('div');
+  card.className = 'card mb-3';
+
+  const cardBody = document.createElement('div');
+  cardBody.className = 'card-body';
+
+  const rating = document.createElement('h5');
+  rating.className = 'card-title';
+  rating.textContent = `Rating: ${review.rating}/5`;
+
+  const comment = document.createElement('p');
+  comment.className = 'card-text';
+  comment.textContent = review.comment;
+
+  const footer = document.createElement('div');
+  footer.className = 'card-footer';
+
+  // Use the nested user information in the review data
+  const username = document.createElement('span');
+  username.textContent = `Reviewed by: ${review.user.username} \n Email: ${review.user.email}`;  // Access the nested user data
+  footer.appendChild(username);
+
+  
+
+  if (review.user === parseInt(userId)) {
+      const editButton = document.createElement('button');
+      editButton.textContent = 'Edit';
+      editButton.className = 'btn btn-secondary btn-sm me-2';
+      editButton.onclick = () => editReview(review.id);
+
+      const deleteButton = document.createElement('button');
+      deleteButton.textContent = 'Delete';
+      deleteButton.className = 'btn btn-danger btn-sm';
+      deleteButton.onclick = () => deleteReview(review.id);
+
+      footer.appendChild(editButton);
+      footer.appendChild(deleteButton);
+  }
+
+  cardBody.appendChild(rating);
+  cardBody.appendChild(comment);
+  card.appendChild(cardBody);
+  card.appendChild(footer);
+
+  return card;
+}
+
 const isCourseEnrolled = (courseId) => {
   return localStorage.getItem(`course_enrolled_${courseId}`) === "true";
 };

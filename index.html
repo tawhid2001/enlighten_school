@@ -11,6 +11,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
     <!-- Navbar -->
@@ -75,6 +76,12 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
       </button>
+    </div>
+
+    <!-- Top 3 Reviewed Courses Section -->
+    <div class="container mt-5 text center d-flex border p-3">
+      <h2>Top 3 Reviewed Courses</h2>
+      <div id="top-rated-courses" class="row"></div>
     </div>
 
     <div id="initial">
@@ -500,6 +507,115 @@
               alert("Error sending message.");
             });
         });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const topRatedCoursesContainer =
+          document.getElementById("top-rated-courses");
+        const topCoursesUrl =
+          "http://127.0.0.1:8000/api/course/top-rated-courses/";
+
+        fetch(topCoursesUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            topRatedCoursesContainer.innerHTML = "";
+
+            if (data.length > 0) {
+              data.forEach((course) => {
+                const courseCard = createCourseCard(course);
+                topRatedCoursesContainer.appendChild(courseCard);
+              });
+            } else {
+              topRatedCoursesContainer.innerHTML =
+                "<p>No top-rated courses available.</p>";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching top-rated courses:", error);
+          });
+      });
+
+      // Function to create a course card
+
+      function createCourseCard(course) {
+    const card = document.createElement("div");
+    card.className = "col-md-6 mb-4"; // Use Bootstrap's grid classes for columns
+
+    // Create a card
+    const courseCard = document.createElement("div");
+    courseCard.className = "card h-100 d-flex flex-row"; // Use flex for horizontal layout
+
+    // Create a container for the image
+    const courseImageContainer = document.createElement("div");
+    courseImageContainer.className = "flex-shrink-0"; // Ensure image doesn't grow
+
+    const courseImage = document.createElement("img");
+    courseImage.src = course.image_url || "images/default.jpg"; // Fallback image
+    courseImage.className = "img-fluid m-3"; // Responsive image class
+    courseImage.alt = course.course_name;
+    courseImage.style.width = "150px"; // Set width for the image
+    courseImage.style.height = "auto"; // Maintain aspect ratio
+
+    courseImageContainer.appendChild(courseImage);
+    courseCard.appendChild(courseImageContainer);
+
+    // Create content container
+    const courseContent = document.createElement("div");
+    courseContent.className = "card-body d-flex flex-column";
+
+    const courseTitle = document.createElement("h5");
+    courseTitle.className = "card-title";
+    courseTitle.textContent = course.course_name;
+
+    const courseRating = document.createElement("p");
+    courseRating.className = "card-text";
+    const averageRating = course.average_rating ? course.average_rating.toFixed(1) : '0';
+    courseRating.innerHTML = `Rating:${generateStars(averageRating)} (${averageRating} / 5)`;
+
+    const courseLink = document.createElement("a");
+    courseLink.href = `/course/${course.slug}/`;
+
+    courseContent.appendChild(courseTitle);
+    courseContent.appendChild(courseRating);
+    courseContent.appendChild(courseLink);
+
+    courseCard.appendChild(courseContent);
+    card.appendChild(courseCard);
+
+    return card;
+}
+
+// Function to generate star ratings
+function generateStars(rating) {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
+
+    console.log(fullStars,halfStar,emptyStars)
+
+    let stars = '';
+
+    // Add full stars
+    for (let i = 0; i < fullStars; i++) {
+        stars += '<span class="fas fa-star checked"></span>';
+    }
+
+    // Add half star
+    if (halfStar) {
+        stars += '<span class="fas fa-star-half-alt checked"></span>';
+    }
+
+    // Add empty stars
+    for (let i = 0; i < emptyStars; i++) {
+        stars += '<span class="far fa-star"></span>';
+    }
+
+    console.log(stars)
+
+    return stars;
+}
+
+
+
     </script>
 
     <script
