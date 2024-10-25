@@ -79,8 +79,8 @@
     </div>
 
     <!-- Top 3 Reviewed Courses Section -->
-    <div class="container mt-5 text center d-flex border p-3">
-      <h2>Top 3 Reviewed Courses</h2>
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between static-section-background">
+      <div class="w-75 text-center mb-3"><h2>Top 3 Reviewed Courses</h2></div>
       <div id="top-rated-courses" class="row"></div>
     </div>
 
@@ -538,11 +538,11 @@
 
       function createCourseCard(course) {
     const card = document.createElement("div");
-    card.className = "col-md-6 mb-4"; // Use Bootstrap's grid classes for columns
+    card.className = "col-md-12 mb-4"; // Use Bootstrap's grid classes for columns
 
     // Create a card
     const courseCard = document.createElement("div");
-    courseCard.className = "card h-100 d-flex flex-row"; // Use flex for horizontal layout
+    courseCard.className = "card h-100 d-flex flex-row "; // Use flex for horizontal layout
 
     // Create a container for the image
     const courseImageContainer = document.createElement("div");
