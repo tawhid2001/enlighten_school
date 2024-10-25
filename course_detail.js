@@ -133,6 +133,7 @@ function createReviewCard(review) {
   const rating = document.createElement("h5");
   rating.className = "card-title";
   rating.textContent = `Rating: ${review.rating}/5`;
+  
 
   const comment = document.createElement("p");
   comment.className = "card-text";
