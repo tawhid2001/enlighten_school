@@ -386,7 +386,4 @@ main{
   margin-top: 20px;
 }
 
-.carousel-item {
-  display: flex;
-  justify-content: center; /* Center the items */
-}
+
