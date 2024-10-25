@@ -73,10 +73,10 @@
 
     <!-- Reviews Section -->
     <h4 class="text-center">Reviews</h4>
-    <div id="reviews" class="mb-4"></div>
+    <div id="reviews" class="m-5"></div>
 
         <!-- Review Form -->
-        <div class="card p-3">
+        <div class="card p-3 m-5" id="review-from-section">
           <h5>Submit Your Review</h5>
           <form id="review-form">
               <div class="mb-3">
@@ -173,6 +173,38 @@
     </div>
   </div>
 
+  <!-- Edit Review Modal -->
+<div class="modal fade" id="editReviewModal" tabindex="-1" aria-labelledby="editReviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editReviewModalLabel">Edit Review</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editReviewForm">
+          <div class="mb-3">
+            <label for="rating" class="form-label">Rating (out of 5):</label>
+            <select id="rating" class="form-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+          <div class="mb-3">
+            <label for="editReviewText" class="form-label">Review</label>
+            <textarea class="form-control" id="editReviewText" rows="3"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="submitEditedReview()">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   
   
     <script src="./navbar.js"></script>
@@ -189,6 +221,9 @@
     <script>
       document.addEventListener("DOMContentLoaded", getCourseDetail);
       document.addEventListener("DOMContentLoaded", getLessons);
+      if(localStorage.getItem("user_type") === 'teacher'){
+        document.getElementById("review-from-section").style.display = 'none'
+      }
     </script>
   </body>
 </html>
