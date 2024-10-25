@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const reviewForm = document.getElementById("review-form");
 
   // Fetch and display reviews
-  fetch("https://enlighten-institute-deployment.vercel.app/api/course/review/")
+  fetch("https://enlighten-institute-deployment.vercel.app/api/course/reviews/")
     .then((response) => response.json())
     .then((data) => {
       const reviewsContainer = document.getElementById("reviews");
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const rating = document.getElementById("rating").value;
     const comment = document.getElementById("comment").value;
     const reviewsUrl =
-      "https://enlighten-institute-deployment.vercel.app/api/course/review/"; // Ensure you have the correct URL
+      "https://enlighten-institute-deployment.vercel.app/api/course/reviews/"; // Ensure you have the correct URL
 
     fetch(reviewsUrl, {
       method: "POST",
@@ -218,7 +218,7 @@ function submitEditedReview() {
           }
       };
 
-      return fetch(`https://enlighten-institute-deployment.vercel.app/api/course/review/${reviewId}/`, {
+      return fetch(`https://enlighten-institute-deployment.vercel.app/api/course/reviews/${reviewId}/`, {
           method: "PUT",
           headers: {
               "Content-Type": "application/json",
