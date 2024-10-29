@@ -1,6 +1,6 @@
 const getUserDetails = () => {
   const token = localStorage.getItem("authToken");
-  fetch("http://127.0.0.1:8000/api/custom/user/", {
+  fetch("https://enlighten-institute-deployment.vercel.app//api/custom/user/", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const addCourse = (event) => {
 
       const token = localStorage.getItem("authToken");
 
-      fetch("http://127.0.0.1:8000/api/course/courselist/", {
+      fetch("https://enlighten-institute-deployment.vercel.app//api/course/courselist/", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -129,7 +129,7 @@ const formatDate = (dateString) => {
 const loadCourses = () => {
   const token = localStorage.getItem('authToken');
   
-  fetch("http://127.0.0.1:8000/api/course/courselist/", {
+  fetch("https://enlighten-institute-deployment.vercel.app//api/course/courselist/", {
     method: 'GET',
     headers: {
       "Content-Type": 'application/json',

@@ -55,7 +55,7 @@ fetch("navbar.html")
 const loadCoursesByDepartment = (search) => {
   const token = localStorage.getItem("authToken");
   fetch(
-    `http://127.0.0.1:8000/api/department/courselist/${search}/`,
+    `https://enlighten-institute-deployment.vercel.app//api/department/courselist/${search}/`,
     {
       method: "GET",
       headers: {
