@@ -1,5 +1,5 @@
 const courseDetailinfo = (courseId) => {
-    return fetch(`https://enlighten-institute-deployment.vercel.app/api/course/courselist/${courseId}`)
+    return fetch(`http://127.0.0.1:8000/api/course/courselist/${courseId}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch course detail.");
@@ -15,7 +15,7 @@ const courseDetailinfo = (courseId) => {
   const enrolledCourses = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("https://enlighten-institute-deployment.vercel.app/api/enrollment/list/", {
+      const response = await fetch("http://127.0.0.1:8000/api/enrollment/list/", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const courseDetailinfo = (courseId) => {
   const fetchEnrollments = () => {
     const token = localStorage.getItem('authToken');
   
-    fetch('https://enlighten-institute-deployment.vercel.app/api/enrollment/list/', {
+    fetch('http://127.0.0.1:8000/api/enrollment/list/', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const courseDetailinfo = (courseId) => {
   const disenroll = (enrollmentId, courseId) => {
     const token = localStorage.getItem("authToken");
   
-    fetch(`https://enlighten-institute-deployment.vercel.app/api/enrollment/enroll/${enrollmentId}/`, {
+    fetch(`http://127.0.0.1:8000/api/enrollment/enroll/${enrollmentId}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

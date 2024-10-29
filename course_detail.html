@@ -11,6 +11,11 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./style.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      // Initialize Stripe with your publishable key
+      const stripe = Stripe('pk_test_51QEzLYJz8SUdaVoDYgT2H67ZOz8Jr5ozPgBHVwqyzoMWyucbIeCDksp3Vwwxwgvgxx3FbP7nmlSQCC9ekz8HVdZ700fa5wCvTx'); // Replace with your actual publishable key
+  </script>
   </head>
   <body>
     <!-- Navbar -->
@@ -63,8 +68,10 @@
       
   
       <div>
-        <button class="btn btn-primary m-4 custom-btn" id="enroll-btn" onclick="enrollStudent()">Enroll</button>
-      </div>
+        <button class="btn btn-primary m-4 custom-btn" id="payment-btn" onclick="processPayment()">Make Payment</button>
+        <button class="btn btn-primary m-4 custom-btn" id="enroll-btn" style="display: none;" onclick="enrollStudent()">Enroll</button>
+    </div>
+    
     </main>
     
     <!-- Lesson Progress -->
@@ -225,5 +232,6 @@
         document.getElementById("review-from-section").style.display = 'none'
       }
     </script>
+   
   </body>
 </html>

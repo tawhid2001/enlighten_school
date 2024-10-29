@@ -1,6 +1,6 @@
 const getUserDetails = () => {
   const token = localStorage.getItem("authToken");
-  fetch("https://enlighten-institute-deployment.vercel.app/api/custom/user/", {
+  fetch("http://127.0.0.1:8000/api/custom/user/", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -84,7 +84,7 @@ const addCourse = (event) => {
 
       const token = localStorage.getItem("authToken");
 
-      fetch("https://enlighten-institute-deployment.vercel.app/api/course/courselist/", {
+      fetch("http://127.0.0.1:8000/api/course/courselist/", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
@@ -129,7 +129,7 @@ const formatDate = (dateString) => {
 const loadCourses = () => {
   const token = localStorage.getItem('authToken');
   
-  fetch("https://enlighten-institute-deployment.vercel.app/api/course/courselist/", {
+  fetch("http://127.0.0.1:8000/api/course/courselist/", {
     method: 'GET',
     headers: {
       "Content-Type": 'application/json',
@@ -155,6 +155,7 @@ const loadCourses = () => {
               <h3 class="card-title">Course Name: ${course.course_name}</h3>
               <h5 class="card-text">Course Code: ${course.course_code}</h5>
               <p class="card-text">Time: ${formatDate(course.created_at)}</p>
+              <p class="card-text">Price: ${course.price}</p>
               <a href="./course_detail.html?id=${course.id}" class="btn btn-primary">Details</a>
             </div>
           </div>

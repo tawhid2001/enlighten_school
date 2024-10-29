@@ -429,7 +429,7 @@
 
       const loadDepartments = () => {
         fetch(
-          "https://enlighten-institute-deployment.vercel.app/api/department/courselist/"
+          "http://127.0.0.1:8000/api/department/courselist/"
         )
           .then((res) => res.json())
           .then((data) => {
@@ -469,7 +469,7 @@
           const message = document.getElementById("message").value;
 
           fetch(
-            "https://enlighten-institute-deployment.vercel.app/api/contact/",
+            "http://127.0.0.1:8000/api/contact/",
             {
               method: "POST",
               headers: {
@@ -493,7 +493,7 @@
         const topRatedCoursesContainer =
           document.getElementById("top-rated-courses");
         const topCoursesUrl =
-          "https://enlighten-institute-deployment.vercel.app/api/course/top-rated-courses/";
+          "http://127.0.0.1:8000/api/course/top-rated-courses/";
 
         fetch(topCoursesUrl)
           .then((response) => response.json())
