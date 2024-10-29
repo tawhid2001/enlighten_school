@@ -60,7 +60,7 @@
       const userEdit = () => {
         const token = localStorage.getItem("authToken");
 
-        fetch("https://enlighten-institute-deployment.vercel.app//api/auth/user/", {
+        fetch("https://enlighten-institute-deployment.vercel.app/api/auth/user/", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -97,7 +97,7 @@
           email: email,
         };
 
-        fetch("https://enlighten-institute-deployment.vercel.app//api/auth/user/update/", {
+        fetch("https://enlighten-institute-deployment.vercel.app/api/auth/user/update/", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

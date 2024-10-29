@@ -55,7 +55,7 @@ fetch("navbar.html")
 const loadCoursesByDepartment = (search) => {
   const token = localStorage.getItem("authToken");
   fetch(
-    `https://enlighten-institute-deployment.vercel.app//api/department/courselist/${search}/`,
+    `https://enlighten-institute-deployment.vercel.app/api/department/courselist/${search}/`,
     {
       method: "GET",
       headers: {

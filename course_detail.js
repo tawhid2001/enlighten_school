@@ -7,7 +7,7 @@ const getCourseDetail = () => {
   const courseId = getQueryParams("id");
   const userType = localStorage.getItem("user_type");
   fetch(
-    `https://enlighten-institute-deployment.vercel.app//api/course/courselist/${courseId}`
+    `https://enlighten-institute-deployment.vercel.app/api/course/courselist/${courseId}`
   )
     .then((res) => res.json())
     .then((course) => {
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const reviewForm = document.getElementById("review-form");
 
   // Fetch and display reviews
-  fetch("https://enlighten-institute-deployment.vercel.app//api/course/reviews/")
+  fetch("https://enlighten-institute-deployment.vercel.app/api/course/reviews/")
     .then((response) => response.json())
     .then((data) => {
       const reviewsContainer = document.getElementById("reviews");
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const rating = document.getElementById("rating").value;
     const comment = document.getElementById("comment").value;
     const reviewsUrl =
-      "https://enlighten-institute-deployment.vercel.app//api/course/reviews/"; // Ensure you have the correct URL
+      "https://enlighten-institute-deployment.vercel.app/api/course/reviews/"; // Ensure you have the correct URL
 
     fetch(reviewsUrl, {
       method: "POST",
@@ -197,7 +197,7 @@ function submitEditedReview() {
   const updatedReviewText = document.getElementById("editReviewText").value;
   const updatedRating = document.getElementById("rating").value;
 
-  fetch("https://enlighten-institute-deployment.vercel.app//api/custom/user/", {
+  fetch("https://enlighten-institute-deployment.vercel.app/api/custom/user/", {
       headers: {
           "Authorization": `Token ${localStorage.getItem("authToken")}`
       }
@@ -220,7 +220,7 @@ function submitEditedReview() {
           }
       };
 
-      return fetch(`https://enlighten-institute-deployment.vercel.app//api/course/reviews/${reviewId}/`, {
+      return fetch(`https://enlighten-institute-deployment.vercel.app/api/course/reviews/${reviewId}/`, {
           method: "PUT",
           headers: {
               "Content-Type": "application/json",
@@ -262,7 +262,7 @@ function submitEditedReview() {
 function deleteReview(reviewId) {
   if (confirm("Are you sure you want to delete this review?")) {
       // Send the DELETE request to the API
-      fetch(`https://enlighten-institute-deployment.vercel.app//api/course/reviews/${reviewId}/`, {
+      fetch(`https://enlighten-institute-deployment.vercel.app/api/course/reviews/${reviewId}/`, {
           method: 'DELETE',
           headers: {
               'Authorization': `Token ${localStorage.getItem("authToken")}`  // Ensure the token is valid and correct
@@ -381,7 +381,7 @@ const editCourse = async (event) => {
   // Send the PUT request to update the course
   try {
     const response = await fetch(
-      `https://enlighten-institute-deployment.vercel.app//api/course/courselist/${courseId}/`,
+      `https://enlighten-institute-deployment.vercel.app/api/course/courselist/${courseId}/`,
       {
         method: "PUT",
         headers: {
@@ -412,7 +412,7 @@ const deleteCourse = () => {
   const courseId = getQueryParams("id");
   const token = localStorage.getItem("authToken");
   fetch(
-    `https://enlighten-institute-deployment.vercel.app//api/course/courselist/${courseId}/`,
+    `https://enlighten-institute-deployment.vercel.app/api/course/courselist/${courseId}/`,
     {
       method: "DELETE",
       headers: {
@@ -438,7 +438,7 @@ const addLesson = (event) => {
 
   const token = localStorage.getItem("authToken");
   fetch(
-    `https://enlighten-institute-deployment.vercel.app//api/course/${courseId}/lessons/`,
+    `https://enlighten-institute-deployment.vercel.app/api/course/${courseId}/lessons/`,
     {
       method: "POST",
       headers: {
@@ -538,13 +538,13 @@ const getLessons = () => {
   localStorage.removeItem("enrolledId");
   const enrolled = fetchEnrollmentId(studentId, courseId);
 
-  let url = `https://enlighten-institute-deployment.vercel.app//api/course/courselessons/${courseId}`;
+  let url = `https://enlighten-institute-deployment.vercel.app/api/course/courselessons/${courseId}`;
   let headers = {};
 
   if (enrolled) {
     headers = { Authorization: `Token ${localStorage.getItem("authToken")}` };
   } else {
-    url = `https://enlighten-institute-deployment.vercel.app//api/course/${courseId}/lessons/`; // Alternate endpoint for non-enrolled users
+    url = `https://enlighten-institute-deployment.vercel.app/api/course/${courseId}/lessons/`; // Alternate endpoint for non-enrolled users
   }
 
   fetch(url, { headers })
@@ -581,7 +581,7 @@ const deleteLesson = (lessonID) => {
   const token = localStorage.getItem("authToken");
 
   fetch(
-    `https://enlighten-institute-deployment.vercel.app//api/course/lesson/${lessonID}/`,
+    `https://enlighten-institute-deployment.vercel.app/api/course/lesson/${lessonID}/`,
     {
       method: "DELETE",
       headers: {
@@ -607,7 +607,7 @@ const processPayment = () => {
   const courseId = getQueryParams("id");
   const studentId = localStorage.getItem("user_id");
 
-  fetch("https://enlighten-institute-deployment.vercel.app//create-checkout-session/", {
+  fetch("https://enlighten-institute-deployment.vercel.app/create-checkout-session/", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
@@ -693,7 +693,7 @@ document.addEventListener("DOMContentLoaded", toggleEnrollPaymentButtonVisibilit
 const fetchCourseResults = async () => {
   try {
     const response = await fetch(
-      `https://enlighten-institute-deployment.vercel.app//api/enrollment/course-results/`,
+      `https://enlighten-institute-deployment.vercel.app/api/enrollment/course-results/`,
       {
         method: "GET",
         headers: {
@@ -729,7 +729,7 @@ const fetchEnrollmentId = (studentId, courseId) => {
   console.log(courseId);
 
   fetch(
-    `https://enlighten-institute-deployment.vercel.app//api/enrollment/student/${studentId}/course/${courseId}/`,
+    `https://enlighten-institute-deployment.vercel.app/api/enrollment/student/${studentId}/course/${courseId}/`,
     {
       method: "GET",
       headers: {
@@ -794,7 +794,7 @@ const enrolledStudentList = async () => {
 
   try {
     const response = await fetch(
-      `https://enlighten-institute-deployment.vercel.app//api/enrollment/students/${courseId}/`
+      `https://enlighten-institute-deployment.vercel.app/api/enrollment/students/${courseId}/`
     );
     const data = await response.json();
     console.log(data); // This will log the enrolled students data
@@ -877,8 +877,8 @@ const submitResult = async (event) => {
 
   if (marks && feedback) {
     const url = isEdit
-      ? `https://enlighten-institute-deployment.vercel.app//api/enrollment/edit-course-results/${resultId.resultId}/`
-      : `https://enlighten-institute-deployment.vercel.app//api/enrollment/course-results/`;
+      ? `https://enlighten-institute-deployment.vercel.app/api/enrollment/edit-course-results/${resultId.resultId}/`
+      : `https://enlighten-institute-deployment.vercel.app/api/enrollment/course-results/`;
     const method = isEdit ? "PUT" : "POST";
 
     // Perform the fetch request
@@ -916,7 +916,7 @@ const submitProgress = (event, lessonId) => {
   };
 
   fetch(
-    "https://enlighten-institute-deployment.vercel.app//api/course/lessonprogress/",
+    "https://enlighten-institute-deployment.vercel.app/api/course/lessonprogress/",
     {
       method: "POST",
       headers: {
@@ -944,7 +944,7 @@ const fetchCompletedLessons = () => {
   const courseId = getQueryParams("id");
 
   fetch(
-    `https://enlighten-institute-deployment.vercel.app//api/course/courselessons/${courseId}`,
+    `https://enlighten-institute-deployment.vercel.app/api/course/courselessons/${courseId}`,
     {
       method: "GET",
       headers: {
@@ -975,7 +975,7 @@ const showCourseProgress = () => {
 
   if (enrolled === "true") {
     fetch(
-      `https://enlighten-institute-deployment.vercel.app//api/course/course_progress/${courseId}/`,
+      `https://enlighten-institute-deployment.vercel.app/api/course/course_progress/${courseId}/`,
       {
         headers: {
           "Content-Type": "application/json",

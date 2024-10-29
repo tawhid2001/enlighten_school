@@ -8,7 +8,7 @@ const getQueryParams = (param) => {
     const lessonId = getQueryParams("lessonId");
     const token = localStorage.getItem("authToken");
   
-    fetch(`https://enlighten-institute-deployment.vercel.app//api/course/lesson/${lessonId}`, {
+    fetch(`https://enlighten-institute-deployment.vercel.app/api/course/lesson/${lessonId}`, {
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -47,7 +47,7 @@ const getQueryParams = (param) => {
     course : courseId,
   };
 
-  fetch(`https://enlighten-institute-deployment.vercel.app//api/course/lesson/${lessonId}/`, {
+  fetch(`https://enlighten-institute-deployment.vercel.app/api/course/lesson/${lessonId}/`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

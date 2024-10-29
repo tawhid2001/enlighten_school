@@ -52,7 +52,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", loadDepartmentsField);
         function loadDepartmentsField() {
-        fetch("https://enlighten-institute-deployment.vercel.app//api/department/courselist/")
+        fetch("https://enlighten-institute-deployment.vercel.app/api/department/courselist/")
           .then((res) => res.json())
           .then((data) => {
             const departmentSelect = document.getElementById("department");

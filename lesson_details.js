@@ -6,7 +6,7 @@ const getQueryParams = (param) => {
 const getLessonDetail = () => {
   const lessonID = getQueryParams("lessonId");
 
-  fetch(`https://enlighten-institute-deployment.vercel.app//api/course/lesson/${lessonID}`, {
+  fetch(`https://enlighten-institute-deployment.vercel.app/api/course/lesson/${lessonID}`, {
     method: 'GET', // Ensure method is specified
     headers: {
       Authorization: `Token ${localStorage.getItem("authToken")}`,
