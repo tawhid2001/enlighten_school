@@ -96,10 +96,8 @@ const handleLogout = () => {
       .then((res) => {
         console.log(res);
         if (res.ok) {
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("user_type");
-          localStorage.removeItem("user_id");
-          window.location.href = "./index.html";
+        localStorage.clear();
+        window.location.href = "./index.html";
         }
       })
       .catch((err) => console.log("Logout Error", err));
