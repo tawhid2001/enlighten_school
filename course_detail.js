@@ -300,7 +300,6 @@ const isCourseEnrolled = (courseId) => {
 const toggleButtons = (userType) => {
   const courseId = getQueryParams("id");
   const control = document.getElementById("controls");
-  const enrollButton = document.getElementById("enroll-btn");
   const courseProgress = document.getElementById("course-progress");
   document.getElementById("result-container").style.display = "none";
 
@@ -308,18 +307,14 @@ const toggleButtons = (userType) => {
     document.getElementById("enrolled_student").style.display = "none";
     if (isCourseEnrolled(courseId)) {
       courseProgress.style.display = "block";
-      enrollButton.style.display = "none";
       document.getElementById("result-container").style.display = "block";
     } else {
-      enrollButton.style.display = "block";
       courseProgress.style.display = "none";
     }
   } else if (userType === "teacher") {
-    enrollButton.style.display = "none";
     control.style.display = "block";
     courseProgress.style.display = "none";
   } else {
-    enrollButton.style.display = "none";
     control.style.display = "none";
     courseProgress.style.display = "none";
   }
@@ -678,17 +673,6 @@ const enrollStudent = () => {
 };
 
 
-const toggleEnrollPaymentButtonVisibility = () =>{
-  const courseId = getQueryParams("id");
-    if (localStorage.getItem(`payment_completed_${courseId}`)) {
-        document.getElementById("payment-btn").style.display = "none";
-        document.getElementById("enroll-btn").style.display = "block";
-    } else {
-        document.getElementById("payment-btn").style.display = "block";
-        document.getElementById("enroll-btn").style.display = "none";
-    }
-};
-document.addEventListener("DOMContentLoaded", toggleEnrollPaymentButtonVisibility);
 
 const fetchCourseResults = async () => {
   try {

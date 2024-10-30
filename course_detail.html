@@ -67,10 +67,9 @@
       </div>
       
   
-      <div>
-        <button class="btn btn-primary m-4 custom-btn" id="payment-btn" onclick="processPayment()">Make Payment</button>
-        <button class="btn btn-primary m-4 custom-btn" id="enroll-btn" style="display: none;" onclick="enrollStudent()">Enroll</button>
-    </div>
+
+      <button class="btn btn-primary m-4 custom-btn" id="payment-btn" onclick="processPayment()">Make Payment<button>
+
     
     </main>
     
@@ -210,9 +209,6 @@
     </div>
   </div>
 </div>
-
-
-  
   
     <script src="./navbar.js"></script>
     <script src="./auth.js"></script>
@@ -228,10 +224,16 @@
     <script>
       document.addEventListener("DOMContentLoaded", getCourseDetail);
       document.addEventListener("DOMContentLoaded", getLessons);
+      const courseId = getQueryParams("id");
+      if (localStorage.getItem(`course_enrolled_${courseId}`) === 'true') {
+            document.getElementById("payment-btn").style.display = "none";
+          } else {
+            document.getElementById("payment-btn").style.display = "block";
+          }
       if(localStorage.getItem("user_type") === 'teacher'){
+        document.getElementById("payment-btn").style.display = "none";
         document.getElementById("review-from-section").style.display = 'none'
       }
     </script>
-   
   </body>
 </html>
