@@ -607,7 +607,7 @@ const processPayment = () => {
   const courseId = getQueryParams("id");
   const studentId = localStorage.getItem("user_id");
 
-  fetch("https://enlighten-institute-deployment.vercel.app/create-checkout-session/", {
+  fetch("https://enlighten-institute-deployment.vercel.app/api/payment/create-checkout-session/", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
