@@ -370,6 +370,7 @@ const editCourse = async (event) => {
     course_name: formData.get("edit_course_name"),
     course_code: formData.get("edit_course_code"),
     description: formData.get("editDescription"),
+    price: parseFloat(formData.get("edit_price")), // Include and parse price
     image_url: imageUrl || undefined, // Include image_url if present
   };
 

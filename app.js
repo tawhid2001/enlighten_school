@@ -79,7 +79,8 @@ const addCourse = (event) => {
           description: formData.get("description"),
           image_url: imageUrl || undefined,  // Use the URL from Imgbb if available
           department: formData.get("department"),
-          slug: slug
+          slug: slug,
+          price: parseFloat(formData.get("price")) // Convert price to a number
       };
 
       const token = localStorage.getItem("authToken");
