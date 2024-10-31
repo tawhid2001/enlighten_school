@@ -6,17 +6,15 @@ const getQueryParams = (param) => {
 const getCourseDetail = () => {
   const courseId = getQueryParams("id");
   const userType = localStorage.getItem("user_type");
-  fetch(
-    `https://enlighten-institute-deployment.vercel.app/api/course/courselist/${courseId}`
-  )
+
+  fetch(`https://enlighten-institute-deployment.vercel.app/api/course/courselist/${courseId}`)
     .then((res) => res.json())
     .then((course) => {
       console.log(course);
       const courseDetail = document.getElementById("course-detail");
       const div = document.createElement("div");
-      const imageUrl = course.image_url
-        ? course.image_url
-        : "images/default.jpg";
+      const imageUrl = course.image_url ? course.image_url : "images/default.jpg";
+      
       div.innerHTML = `
           <div class="card m-5 mx-auto">
             <img src="${imageUrl}" class="card-img-top custom-card-img" alt="Course Image">
@@ -24,14 +22,10 @@ const getCourseDetail = () => {
               <h1 class="card-title">Course Name: ${course.course_name}</h1>
               <h5 class="card-text">Course Code: ${course.course_code}</h5>
               <p class="card-text">Description: ${course.description}</p>
-              <p class="card-text">Teacher: <small><strong>${
-                course.teacher_name
-              }</strong></small></p>
+              <p class="card-text">Teacher: <small><strong>${course.teacher_name}</strong></small></p>
               <p class="card-text">Department: ${course.department_name}</p>
               <p class="card-text">Price: ${course.price}</p>
-              <p class="card-text">Time: <small><strong>${formatDate(
-                course.created_at
-              )}</strong></small></p>
+              <p class="card-text">Time: <small><strong>${formatDate(course.created_at)}</strong></small></p>
               ${
                 userType === "teacher"
                   ? `
@@ -49,23 +43,23 @@ const getCourseDetail = () => {
                   </div>
                 </div>
               `
-                  : `
-            
-              `
+                  : ``
               }
             </div>
           </div>
         `;
       courseDetail.appendChild(div);
 
-      // set data into modal
+      // Set data into modal, including the price field
       document.getElementById("edit_course_name").value = course.course_name;
       document.getElementById("edit_course_code").value = course.course_code;
       document.getElementById("editDescription").value = course.description;
+      document.getElementById("edit_price").value = course.price; // Populate the price field
     });
 
   toggleButtons(userType);
 };
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const courseId = getQueryParams("id");
